@@ -1,4 +1,3 @@
-# BadCat Games
 # 🐱 BadCat Games
 
 ## 🎮 Sobre a BadCat Games
