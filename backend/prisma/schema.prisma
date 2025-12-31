@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  name         String
+  email        String     @unique
+  passwordHash String
+  bio          String?
+  photo        String?
+  banner       String?
+  createdAt    DateTime   @default(now())
+
+  posts        Post[]
+  comments     GameComment[]
+  favorites    Favorite[]
+  reports      Report[]
+
+  favoritedBy  Favorite[] @relation("UserFavorites")
+}
+
+model Game {
+  id          Int           @id @default(autoincrement())
+  name        String
+  slug        String        @unique
+  description String
+  cover       String?
+
+  comments    GameComment[]
+}
+
+model GameComment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+
+  userId    Int
+  gameId    Int
+
+  user      User     @relation(fields: [userId], references: [id])
+  game      Game     @relation(fields: [gameId], references: [id])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  content   String
+  image     String?
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  favorites Favorite[]
+}
+
+
+model Favorite {
+  id        Int      @id @default(autoincrement())
+  type      String   // "user" ou "post"
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+
+  postId    Int?
+  post      Post?    @relation(fields: [postId], references: [id])
+
+  targetUserId Int?
+  targetUser   User? @relation("UserFavorites", fields: [targetUserId], references: [id])
+}
+
+
+model Report {
+  id          Int      @id @default(autoincrement())
+  description String
+  imagePath   String?
+  createdAt   DateTime @default(now())
+
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id])
+}
