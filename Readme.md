@@ -1,3 +1,4 @@
+[./Readme/BadCatBanner.png]
 # BadCat Games
 
 ## Sobre a BadCat Games
