@@ -1,9 +1,10 @@
 <img src="/Readme/BagCatBanner.png">
+
 # BadCat Games
 
 ## Sobre a BadCat Games
 
-A **BadCat Games** é uma empresa fictícia de desenvolvimento de jogos fundada por um grupo de amigos com muita afinidade por tecnologia, criatividade e jogos digitais. Nosso objetivo é criar experiências digitais divertidas, imersivas e acessíveis, explorando diferentes gêneros e plataformas, com foco especial em jogos indie.
+A **BadCat Games** é uma empresa indie de desenvolvimento de jogos digitais multiplataforma! Nosso objetivo é criar experiências divertidas, imersivas e acessíveis para toda a comudade gamer!
 
 A empresa nasceu como um projeto acadêmico, mas é pensada com uma estrutura profissional, simulando o funcionamento real de um estúdio de desenvolvimento de jogos.
 
@@ -11,7 +12,7 @@ A empresa nasceu como um projeto acadêmico, mas é pensada com uma estrutura pr
 
 ## Nossa Missão
 
-Desenvolver jogos criativos e envolventes, oferecendo experiências de qualidade que unam diversão, inovação e aprendizado.
+A BadCat Games pretende desenvolver experiências digitais únicas e que sejam memoráveis para o público, comprometendo-se em manter um alto nível de qualidade em seus jogos diante o cenário do mercado inundado por experiências produzidas apenas para gerar lucro a partir de modas passageiras. Assim, ainda que a empresa busque fazer isso de forma rentável, não pretende-se sacrificar a qualidade do produto e, acima de tudo, o entretenimento de seus clientes para tal.
 
 ## Visão
 
@@ -39,14 +40,65 @@ Tornar-se um estúdio reconhecido pela originalidade de seus jogos e pela capaci
 
 ## Equipe
 
-A BadCat Games é formada por estudantes/desenvolvedores iniciantes, cada um contribuindo com diferentes habilidades, como:
+A BadCat Games é formada por estudantes/desenvolvedores iniciantes, cada um contribuindo com diferentes habilidades!
 
-* Programação
-* Design de jogos
-* Roteiro
-* Arte e animação
-* Testes e documentação
-* Modelagem 3D
+### Cauã Rodrigues
+**Idade:** 18 anos  
+**Cargo:** Programador | Modelador 3D  
+**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+
+**Experiência prévia:**  
+Participação em projetos de desenvolvimento de jogos na área de programação utilizando GDScript na plataforma Godot. Atuação atual em modelagem de assets 3D para jogos. Desenvolvimento de projetos web com HTML, CSS (Puro, Bootstrap e Tailwind), JavaScript, React e Dart com Flutter. Experiência com Java e bancos de dados como MongoDB, MongoDB + Prisma e SQLite.
+
+---
+
+### Saul Ramos  
+**Idade:** 18 anos  
+**Cargo:** Designer | Programador  
+**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+
+**Experiência prévia:**  
+Durante o ensino acadêmico, participou ativamente na área de design, atuando tanto na criação de cenários quanto de personagens. Teve participação significativa na definição da maior parte das artes de uma experiência desenvolvida na plataforma ROBLOX.
+
+---
+
+###  Arthur Lima 
+**Idade:** 18 anos  
+**Cargo:** Programador  
+**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+
+**Experiência prévia:**  
+Projeto de desenvolvimento de jogos utilizando GDScript na plataforma Godot. Desenvolvimento de projetos web com HTML, CSS, JavaScript e React. Experiência em projetos Java. Atualmente atua no desenvolvimento de jogos da Bad Cat Games utilizando a linguagem Luau.
+
+---
+
+### Isaac Ramos  
+**Idade:** 18 anos  
+**Cargo:** Modelador e Animador 3D | Programador  
+**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+
+**Experiência prévia:**  
+Desenvolvimento em GDScript e criação de interfaces de jogos na plataforma Godot. Familiaridade com linguagens como Java, JavaScript, HTML, SQL e MongoDB. Experiência em modelagem e animação 3D no Blender, além de criação de objetos e personagens na plataforma ROBLOX Studio. Atuação em desenvolvimento web individual e em equipe, com uso frequente do VSCode.
+
+---
+
+### Ana Beatriz  
+**Idade:** 19 anos  
+**Cargo:** Designer e Programadora Web
+**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+
+**Experiência prévia:**  
+Atividades como voluntária e bolsista acadêmica na Huawei Academy IFCE durante os anos de 2023 e 2024, atuando na área de design gráfico, UI/UX e monitoria de design. Desenvolvimento de projeto em Swift para iOS por meio do programa Capacita Brasil em 2025. Experiência com criação de interfaces gráficas e front-end utilizando Figma para Xcode (iOS) e VSCode (Android e Web).
+
+---
+
+### João Pedro  
+**Idade:** 18 anos  
+**Cargo:** Programador  
+**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+
+**Experiência prévia:**  
+Desenvolvedor independente de jogos na plataforma ROBLOX. Criação de aplicações web com HTML, CSS, JavaScript e React, além de experiência com streaming de vídeo. Alta capacitação em Luau, com conhecimento sólido sobre arquitetura cliente/servidor e programação orientada a objetos e eventos.
 
 ---
 
@@ -62,15 +114,7 @@ Dependendo do projeto, podemos utilizar:
 
 ---
 
-## Projetos
-
-Alguns projetos desenvolvidos ou em desenvolvimento pela BadCat Games:
-
-* Projetos acadêmicos
-* Jogos experimentais
-* Projeto no ROBLOX: The Campus - ainda em BETA 
-
-*(Os projetos podem variar conforme o objetivo educacional ou criativo da equipe.)*
+## Projeto The Campus
 
 ---
 
@@ -80,4 +124,4 @@ A **BadCat Games** é uma empresa fictícia, criada para fins educacionais e aca
 
 ---
 
- *Um "obrigado" de cada membro da BadCat Games por conhecer nossa empresa!*
+ *Um "obrigado" de cada membro da BadCat Games por fortalecer nossa empresa!*
