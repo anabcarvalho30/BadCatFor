@@ -1,4 +1,4 @@
-[./Readme/BadCatBanner.png]
+<img src="/Readme/BagCatBanner.png">
 # BadCat Games
 
 ## Sobre a BadCat Games
