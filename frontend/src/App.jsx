@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import { AuthProvider } from './contexts/AuthContext'; // Importado aqui
+import Home from './pages/Home';
+import GamesPage from './pages/GamesPage';
+import GamePage from './pages/GamePage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import UserPage from './pages/UserPage';
+import SupportPage from './pages/SupportPage';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    // CORREÇÃO: O AuthProvider deve envolver TUDO
+    <AuthProvider>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          {/* Rota Pública Principal */}
+          <Route path="/" element={<Home />} />
+          
+          {/* Rotas de Conteúdo */}
+          <Route path="/games" element={<GamesPage />} />
+          <Route path="/games/:slug" element={<GamePage />} />
+          <Route path="/support" element={<SupportPage />} />
+          
+          {/* Rotas Institucionais */}
+          <Route path="/team" element={<div className="container"><h1>Equipe</h1></div>} />
+          
+          {/* Rotas de Autenticação */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          
+          {/* Rotas de Usuário */}
+          <Route path="/user/:id" element={<UserPage />} />
+          
+          {/* Rota 404 */}
+          <Route path="*" element={<div className="container"><h1>404 - Página não encontrada</h1></div>} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
