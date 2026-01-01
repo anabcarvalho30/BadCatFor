@@ -93,9 +93,9 @@ Atividades como voluntária e bolsista acadêmica na Huawei Academy IFCE durante
 ---
 
 ### João Pedro  
-**Idade:** 18 anos  
+**Idade:** 17 anos  
 **Cargo:** Programador  
-**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+**GitHub:** https://github.com/joaopedrohub  
 
 **Experiência prévia:**  
 Desenvolvedor independente de jogos na plataforma ROBLOX. Criação de aplicações web com HTML, CSS, JavaScript e React, além de experiência com streaming de vídeo. Alta capacitação em Luau, com conhecimento sólido sobre arquitetura cliente/servidor e programação orientada a objetos e eventos.
