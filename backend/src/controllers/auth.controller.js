@@ -1,34 +1,48 @@
-import { prisma } from "../lib/prisma.js";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { prisma } from '../lib/prisma.js'; // Importante colocar .js no final
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
-// Registrar usuário
+const JWT_SECRET = process.env.JWT_SECRET;
+
 export const register = async (req, res) => {
+  const { name, email, password } = req.body;
+
   try {
-    const { name, email, password } = req.body;
-    const passwordHash = await bcrypt.hash(password, 10);
+    const userExists = await prisma.user.findUnique({ where: { email } });
+    if (userExists) return res.status(400).json({ error: 'Email já cadastrado' });
+
+    const hash = await bcrypt.hash(password, 10);
+
     const user = await prisma.user.create({
-      data: { name, email, passwordHash },
+      data: {
+        name,
+        email,
+        passwordHash: hash,
+      },
     });
-    res.status(201).json({ user });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+
+    user.passwordHash = undefined; // Não retornar o hash
+    return res.status(201).json(user);
+  } catch (error) {
+    return res.status(500).json({ error: 'Erro ao registrar usuário' });
   }
 };
 
-// Login usuário
 export const login = async (req, res) => {
+  const { email, password } = req.body;
+
   try {
-    const { email, password } = req.body;
     const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) return res.status(404).json({ error: "User not found" });
+    if (!user) return res.status(400).json({ error: 'Usuário não encontrado' });
 
-    const isValid = await bcrypt.compare(password, user.passwordHash);
-    if (!isValid) return res.status(401).json({ error: "Invalid password" });
+    const isValidPassword = await bcrypt.compare(password, user.passwordHash);
+    if (!isValidPassword) return res.status(401).json({ error: 'Senha inválida' });
 
-    const token = jwt.sign({ userId: user.id }, "SECRET_KEY", { expiresIn: "1h" });
-    res.json({ token });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '1d' });
+
+    user.passwordHash = undefined;
+    return res.json({ user, token });
+  } catch (error) {
+    return res.status(500).json({ error: 'Erro no login' });
   }
 };

@@ -1,15 +1,30 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
-export const authenticate = (req, res, next) => {
+const JWT_SECRET = process.env.JWT_SECRET;
+
+export function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
-  if (!authHeader) return res.status(401).json({ error: "No token provided" });
 
-  const token = authHeader.split(" ")[1];
-  try {
-    const decoded = jwt.verify(token, "SECRET_KEY");
-    req.userId = decoded.userId;
-    next();
-  } catch (err) {
-    res.status(401).json({ error: "Invalid token" });
+  if (!authHeader) {
+    return res.status(401).json({ error: 'Token não fornecido' });
   }
-};
+
+  const parts = authHeader.split(' ');
+
+  if (parts.length !== 2) {
+    return res.status(401).json({ error: 'Erro no formato do Token' });
+  }
+
+  const [scheme, token] = parts;
+
+  if (!/^Bearer$/i.test(scheme)) {
+    return res.status(401).json({ error: 'Token mal formatado' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, decoded) => {
+    if (err) return res.status(401).json({ error: 'Token inválido' });
+
+    req.userId = decoded.id;
+    return next();
+  });
+}

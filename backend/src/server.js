@@ -1,6 +1,7 @@
+import 'dotenv/config';
 import express from "express";
 import cors from "cors";
-import { prisma } from "./lib/prisma.js";
+import { prisma } from "./lib/prisma.js"; // CORREÇÃO: Apenas um ponto (.)
 
 import authRoutes from "./routes/auth.routes.js";
 import postRoutes from "./routes/post.routes.js";
@@ -24,14 +25,20 @@ app.get("/", (req, res) => {
   res.send("Servidor rodando! API pronta.");
 });
 
-// Rota de teste (opcional)
+// Rota de teste
 app.get("/users", async (req, res) => {
-  const users = await prisma.user.findMany();
-  res.json(users);
+  try {
+    const users = await prisma.user.findMany();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar usuários" });
+  }
 });
 
-// Start server
 const PORT = process.env.PORT || 3000;
+
+// O servidor inicia aqui
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Pressione CTRL + C para parar o servidor`);
 });
