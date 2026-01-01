@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { prisma } from '../lib/prisma.js'; // Note os dois pontos (..) para voltar pasta
+import { prisma } from '../lib/prisma.js';
 
 const router = Router();
 
-// GET /games -> Lista todos os jogos
+// GET /games
 router.get('/', async (req, res) => {
   try {
     const games = await prisma.game.findMany({
@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET /games/:slug -> Detalhes de um jogo específico
+// GET /games/:slug
 router.get('/:slug', async (req, res) => {
   const { slug } = req.params;
   try {

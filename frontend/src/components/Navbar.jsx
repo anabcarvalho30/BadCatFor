@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { LogOut } from 'lucide-react'; // Ícone de sair
+import { LogOut } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -9,18 +9,15 @@ const Navbar = () => {
   return (
     <nav style={{ padding: '0.8rem 2rem', borderBottom: '1px solid #333', background: '#222', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       
-      {/* Logo */}
       <Link to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', textDecoration: 'none' }}>
         🐱 BadCatFor
       </Link>
       
-      {/* Links Centrais */}
       <div style={{ display: 'flex', gap: '20px' }}>
         <Link to="/" className="nav-link" style={{color: '#ccc', textDecoration: 'none'}}>Home</Link>
         <Link to="/games" className="nav-link" style={{color: '#ccc', textDecoration: 'none'}}>Jogos</Link>
       </div>
 
-      {/* Área do Usuário */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
         {user ? (
           <>

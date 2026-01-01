@@ -1,12 +1,11 @@
-import { useState, useContext } from 'react'; // Adicionado useContext
+import { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
-import { AuthContext } from '../contexts/AuthContext'; // Importar o contexto
+import { AuthContext } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   
-  // Pegamos a função de login do nosso Contexto Global
   const { login } = useContext(AuthContext); 
 
   const [formData, setFormData] = useState({
@@ -24,14 +23,11 @@ const LoginPage = () => {
       const response = await api.post('/auth/login', formData);
       
       const { token, user } = response.data;
-      
-      // CORREÇÃO: Usamos a função do contexto em vez de localStorage manual
-      // Isso faz a Navbar atualizar instantaneamente!
       login(user, token);
 
       alert(`Bem-vindo de volta, ${user.name}!`);
-      navigate('/'); // Vai para a Home
-
+      navigate('/');
+      
     } catch (error) {
       console.error(error);
       alert('Falha no login: ' + (error.response?.data?.error || 'Credenciais inválidas.'));

@@ -1,6 +1,6 @@
-# 🐱 BadCat Games
+# BadCat Games
 
-## 🎮 Sobre a BadCat Games
+## Sobre a BadCat Games
 
 A **BadCat Games** é uma empresa fictícia de desenvolvimento de jogos fundada por um grupo de amigos com muita afinidade por tecnologia, criatividade e jogos digitais. Nosso objetivo é criar experiências digitais divertidas, imersivas e acessíveis, explorando diferentes gêneros e plataformas, com foco especial em jogos indie.
 
@@ -8,15 +8,15 @@ A empresa nasceu como um projeto acadêmico, mas é pensada com uma estrutura pr
 
 ---
 
-## ⚔️ Nossa Missão
+## Nossa Missão
 
 Desenvolver jogos criativos e envolventes, oferecendo experiências de qualidade que unam diversão, inovação e aprendizado.
 
-## 👀 Visão
+## Visão
 
 Tornar-se um estúdio reconhecido pela originalidade de seus jogos e pela capacidade de transformar boas ideias em projetos bem executados.
 
-## 💡 Valores
+## Valores
 
 * Criatividade e inovação
 * Trabalho em equipe
@@ -26,7 +26,7 @@ Tornar-se um estúdio reconhecido pela originalidade de seus jogos e pela capaci
 
 ---
 
-## 🔍 O que fazemos
+## O que fazemos
 
 * Desenvolvimento de jogos digitais
 * Criação de protótipos e projetos experimentais
@@ -36,7 +36,7 @@ Tornar-se um estúdio reconhecido pela originalidade de seus jogos e pela capaci
 
 ---
 
-## 🧑‍💻 Equipe
+## Equipe
 
 A BadCat Games é formada por estudantes/desenvolvedores iniciantes, cada um contribuindo com diferentes habilidades, como:
 
@@ -49,7 +49,7 @@ A BadCat Games é formada por estudantes/desenvolvedores iniciantes, cada um con
 
 ---
 
-## 🧠 Tecnologias utilizadas
+## Tecnologias utilizadas
 
 Dependendo do projeto, podemos utilizar:
 
@@ -61,7 +61,7 @@ Dependendo do projeto, podemos utilizar:
 
 ---
 
-## 🖥️ Projetos
+## Projetos
 
 Alguns projetos desenvolvidos ou em desenvolvimento pela BadCat Games:
 
@@ -73,10 +73,10 @@ Alguns projetos desenvolvidos ou em desenvolvimento pela BadCat Games:
 
 ---
 
-## 📄 Observação
+## Observação
 
 A **BadCat Games** é uma empresa fictícia, criada para fins educacionais e acadêmicos, não possuindo fins comerciais reais, mas que posteriormente pode vir a se tornar um negócio real e profissional.
 
 ---
 
-🔥 *Um "obrigado" de cada membro da BadCat Games por conhecer nossa empresa!*
+ *Um "obrigado" de cada membro da BadCat Games por conhecer nossa empresa!*

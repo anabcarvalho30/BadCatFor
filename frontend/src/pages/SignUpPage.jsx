@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
 
 const SignUpPage = () => {
-  const navigate = useNavigate(); // Hook para redirecionar o utilizador
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,11 +15,11 @@ const SignUpPage = () => {
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault(); // Evita que a página recarregue
+    e.preventDefault();
     try {
       await api.post('/auth/register', formData);
       alert('Conta criada com sucesso! Faça login agora.');
-      navigate('/login'); // Manda para o login
+      navigate('/login');
     } catch (error) {
       console.error(error);
       alert('Erro ao criar conta: ' + (error.response?.data?.error || 'Tente novamente.'));

@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma.js'; // Importante colocar .js no final
+import { prisma } from '../lib/prisma.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -21,7 +21,7 @@ export const register = async (req, res) => {
       },
     });
 
-    user.passwordHash = undefined; // Não retornar o hash
+    user.passwordHash = undefined;
     return res.status(201).json(user);
   } catch (error) {
     return res.status(500).json({ error: 'Erro ao registrar usuário' });

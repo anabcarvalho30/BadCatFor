@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import { AuthProvider } from './contexts/AuthContext'; // Importado aqui
+import { AuthProvider } from './contexts/AuthContext';
 import Home from './pages/Home';
 import GamesPage from './pages/GamesPage';
 import GamePage from './pages/GamePage';
@@ -11,7 +11,6 @@ import SupportPage from './pages/SupportPage';
 
 function App() {
   return (
-    // CORREÇÃO: O AuthProvider deve envolver TUDO
     <AuthProvider>
       <BrowserRouter>
         <Navbar />

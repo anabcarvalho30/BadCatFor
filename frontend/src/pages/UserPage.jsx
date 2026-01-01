@@ -5,43 +5,36 @@ import { Settings, Save, X, Camera } from 'lucide-react';
 import api from '../services/api';
 
 const UserPage = () => {
-  const { id } = useParams(); // ID da URL (quem estamos vendo)
-  const { user: currentUser } = useContext(AuthContext); // Quem está logado
+  const { id } = useParams();
+  const { user: currentUser } = useContext(AuthContext);
   
-  // Estado local para armazenar dados da página
   const [profileUser, setProfileUser] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   
-  // Dados do formulário de edição
   const [editForm, setEditForm] = useState({
     name: '',
     photo: '',
-    bannerColor: '#444444', // Cor padrão
-    password: '' // Opcional
+    bannerColor: '#444444',
+    password: '' 
   });
 
-  // Simulação de verificação: O perfil que estou vendo é o meu?
   const isMyProfile = currentUser && currentUser.id === Number(id);
 
-  // Carregar dados (fictício, pois ainda não temos rota GET /user/:id no backend, usaremos dados locais por enquanto)
   useEffect(() => {
-    // TODO: Criar rota GET /users/:id no backend para buscar dados reais
-    // Por enquanto, se for meu perfil, uso meus dados
+
     if (isMyProfile) {
       setProfileUser(currentUser);
       setEditForm({
         name: currentUser.name,
         photo: currentUser.photo || '',
-        bannerColor: '#646cff' // Mock
+        bannerColor: '#646cff'
       });
     }
   }, [id, currentUser, isMyProfile]);
 
   const handleSave = async () => {
-    // Aqui enviaríamos o PUT para a API
     alert("Funcionalidade de salvar será conectada ao backend em breve!");
     
-    // Atualiza visualmente (mock)
     setProfileUser({...profileUser, ...editForm});
     setIsEditing(false);
   };
@@ -50,7 +43,6 @@ const UserPage = () => {
 
   return (
     <div>
-      {/* --- BANNER --- */}
       <div style={{ 
         height: '200px', 
         backgroundColor: isEditing ? editForm.bannerColor : (profileUser.bannerColor || '#444'),
@@ -70,10 +62,8 @@ const UserPage = () => {
 
       <div className="container" style={{ position: 'relative', marginTop: '-60px' }}>
         
-        {/* --- CABEÇALHO DO PERFIL --- */}
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: '20px', marginBottom: '30px' }}>
           
-          {/* Foto de Perfil */}
           <div style={{ position: 'relative' }}>
             <img 
               src={isEditing ? (editForm.photo || "https://placehold.co/150") : (profileUser.photo || "https://placehold.co/150")} 
@@ -87,7 +77,6 @@ const UserPage = () => {
             )}
           </div>
 
-          {/* Info do Usuário + Botão de Editar */}
           <div style={{ flex: 1, paddingBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               {isEditing ? (
@@ -104,7 +93,6 @@ const UserPage = () => {
               <span style={{ color: '#aaa' }}>@{profileUser.email?.split('@')[0]}</span>
             </div>
 
-            {/* Botão de Engrenagem (Só aparece se for o dono do perfil) */}
             {isMyProfile && (
               <div style={{display: 'flex', gap: '10px'}}>
                 {isEditing ? (
@@ -126,7 +114,6 @@ const UserPage = () => {
           </div>
         </div>
 
-        {/* --- FORMULÁRIO DE EDIÇÃO EXTRA --- */}
         {isEditing && (
           <div className="auth-container" style={{margin: '0 0 30px 0', textAlign: 'left'}}>
             <h3>Editar Informações</h3>
@@ -147,7 +134,6 @@ const UserPage = () => {
 
         <hr style={{ borderColor: '#333', margin: '20px 0' }} />
 
-        {/* --- ÁREA DE POSTS --- */}
         {isMyProfile && !isEditing && (
           <div style={{ marginBottom: '30px', background: '#2a2a2a', padding: '15px', borderRadius: '8px' }}>
             <textarea 

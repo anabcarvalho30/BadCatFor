@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createPost, listPosts } from '../controllers/post.controller.js';
-import { authMiddleware } from '../middlewares/auth.middleware.js'; // Importante: usar .js no final
+import { authMiddleware } from '../middlewares/auth.middleware.js';
 
 const router = Router();
 

@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom';
-import { Ghost, Gamepad2, Users, ArrowRight } from 'lucide-react'; // Ícones para dar vida
+import { Ghost, Gamepad2, Users, ArrowRight } from 'lucide-react';
 
 const Home = () => {
   return (
     <div>
-      {/* --- HERO SECTION (Destaque Principal) --- */}
       <section style={{
         background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url("https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop")',
         backgroundSize: 'cover',
@@ -44,7 +43,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* --- DESTAQUES / FEATURES --- */}
       <div className="container" style={{ padding: '60px 20px' }}>
         <h2 style={{ textAlign: 'center', marginBottom: '40px', fontSize: '2rem' }}>Por que entrar no BadCatFor?</h2>
         
@@ -74,14 +72,13 @@ const Home = () => {
         </div>
       </div>
 
-      {/* --- ÚLTIMAS NOTÍCIAS (Estático por enquanto) --- */}
       <div style={{ background: '#222', padding: '60px 0' }}>
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
             <h2>Últimas Notícias</h2>
             <Link to="/about/news" style={{ color: '#646cff', display: 'flex', alignItems: 'center', gap: '5px' }}>
               Ver tudo <ArrowRight size={16} />
-            </Link>
+            </Link> {/*Path não existe!!!*/}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
