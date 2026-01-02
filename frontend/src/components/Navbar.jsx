@@ -39,6 +39,7 @@ const Navbar = () => {
           </Link>
           
           {/* Links de navegação */}
+          <div className="navbar-right-container">
           <div className="navbar-nav">
             <Link to="/" className="nav-link navbar-nav-link">Home</Link>
             <Link to="/games" className="nav-link navbar-nav-link">
@@ -47,6 +48,7 @@ const Navbar = () => {
           </div>
 
           {/* Área do usuário */}
+          
           <div className="user-menu-container" ref={menuRef}>
             {user ? (
               <>
@@ -135,6 +137,7 @@ const Navbar = () => {
                 )}
               </>
             )}
+          </div>
           </div>
         </div>
       </nav>
