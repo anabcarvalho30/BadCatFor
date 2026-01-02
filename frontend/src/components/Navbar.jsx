@@ -28,10 +28,11 @@ const Navbar = () => {
   return (
     <>
       <nav className="navbar-header">
-        <Link to="/" className="navbar-logo">
+        <div className="navbar-container">
+          
+          <Link to="/" className="navbar-logo">
             BadCat Games
           </Link>
-        <div className="navbar-container">
           
           {/* Links de navegação */}
           <div className="navbar-nav">
