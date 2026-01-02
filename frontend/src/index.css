@@ -130,14 +130,7 @@ img {
 
 /* Estilos específicos para elementos da navbar */
 .navbar-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  width: 100%;
-  border-bottom: 1px solid #333;
-  background-color: rgba(34, 34, 34, 0.95);
-  backdrop-filter: blur(8px);
-  padding: 0 1rem;
+  background-color: rgba(0, 0, 0, 0.95);
 }
 
 .navbar-container {
@@ -166,18 +159,11 @@ img {
 }
 
 .navbar-nav-link {
-  font-size: 1rem;
+  font-size: 1.4rem;
   font-weight: 500;
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-variation-settings:
-    "wdth" 100;
+  font-family: "Bebas Neue", sans-serif;
 }
 
 .navbar-user-button {
