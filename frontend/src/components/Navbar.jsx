@@ -10,7 +10,7 @@ const Navbar = () => {
     <nav style={{ padding: '0.8rem 2rem', borderBottom: '1px solid #333', background: '#222', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       
       <Link to="/" style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#fff', textDecoration: 'none' }}>
-        🐱 BadCatFor
+        BadCatFor
       </Link>
       
       <div style={{ display: 'flex', gap: '20px' }}>
