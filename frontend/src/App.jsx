@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+
 import { AuthProvider } from './contexts/AuthProvider';
+
 import Home from './pages/Home';
 import GamesPage from './pages/GamesPage';
 import GamePage from './pages/GamePage';
