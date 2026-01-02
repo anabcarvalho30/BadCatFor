@@ -119,15 +119,6 @@ img {
   animation: fadeIn 0.2s ease-out;
 }
 
-/* Estilos para os botões do dropdown */
-.user-menu-container button {
-  transition: background-color 0.2s ease;
-}
-
-.user-menu-container button:hover {
-  background-color: rgba(100, 108, 255, 0.1) !important;
-}
-
 /* Estilos específicos para elementos da navbar */
 .navbar-header {
   background-color: rgba(0, 0, 0, 0.95);
@@ -136,26 +127,36 @@ img {
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
-  height: 64px;
+  height: 5rem;
   display: flex;
   align-items: center;
 }
+/* Logo da Navbar */
+.navbar-logo-img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
 
+.navbar-logo:hover .navbar-logo-img {
+  opacity: 0.8;
+}
+
+/* Ajuste para o container da logo */
 .navbar-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
   text-decoration: none;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1.25rem;
+  height: 40px; 
 }
+
 
 .navbar-nav {
   display: flex;
   gap: 24px;
   align-items: center;
-  padding: 0 5% 0 65%
+  padding: 0 5% 0 60%
 }
 
 .navbar-nav-link {

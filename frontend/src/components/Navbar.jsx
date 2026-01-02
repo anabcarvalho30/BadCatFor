@@ -30,15 +30,19 @@ const Navbar = () => {
       <nav className="navbar-header">
         <div className="navbar-container">
           
-          <Link to="/" className="navbar-logo">
-            BadCat Games
+           <Link to="/" className="navbar-logo">
+            <img 
+              src="https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/badcatlogo.png" 
+              alt="BadCatFor Logo" 
+              className="navbar-logo-img"
+            />
           </Link>
           
           {/* Links de navegação */}
           <div className="navbar-nav">
             <Link to="/" className="nav-link navbar-nav-link">Home</Link>
             <Link to="/games" className="nav-link navbar-nav-link">
-              <Gamepad2 size={16} /> Jogos
+              Jogos
             </Link>
           </div>
 
