@@ -14,7 +14,7 @@ const GamesPage = () => {
   return (
     <div className="container">
       <h1>Últimos Jogos de Terror</h1>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', marginTop: '20px' }}>
+      <div>
         {games.map(game => (
           <div key={game.id} className="game-card">
             <img
