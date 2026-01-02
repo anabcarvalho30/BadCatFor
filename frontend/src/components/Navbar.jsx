@@ -47,7 +47,7 @@ const Navbar = () => {
       height: '64px', // h-16
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
+    //  justifyContent: 'space-between',
     },
     logoLink: {
       display: 'flex',
