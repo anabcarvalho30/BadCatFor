@@ -8,14 +8,16 @@ datasource db {
 }
 
 model User {
-  id           Int        @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   name         String
-  email        String     @unique
+  email        String   @unique
   passwordHash String
+  
   bio          String?
   photo        String?
   banner       String?
-  createdAt    DateTime   @default(now())
+  
+  createdAt    DateTime @default(now())
 
   posts        Post[]
   comments     GameComment[]
