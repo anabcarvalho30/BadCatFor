@@ -21,10 +21,16 @@ export const register = async (req, res) => {
       },
     });
 
-    user.passwordHash = undefined;
+   user.passwordHash = undefined;
     return res.status(201).json(user);
+
   } catch (error) {
-    return res.status(500).json({ error: 'Erro ao registrar usuário' });
+    console.error("ERRO DETALHADO NO REGISTRO:", error);
+
+    return res.status(500).json({ 
+      error: 'Erro ao registrar usuário', 
+      details: error.message 
+    });
   }
 };
 
