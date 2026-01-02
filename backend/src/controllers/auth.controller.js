@@ -9,17 +9,13 @@ export const register = async (req, res) => {
   const { name, email, password, bio } = req.body;
 
   try {
-    // 1. Verifica se usuário existe
     const userExists = await prisma.user.findUnique({ where: { email } });
     if (userExists) return res.status(400).json({ error: 'Email já cadastrado' });
 
-    // --- LÓGICA DE UPLOAD CORRIGIDA PARA O BUCKET 'imagens' ---
     const uploadToSupabase = async (file, folder) => {
-      // Remove espaços do nome do arquivo para evitar erros de URL
       const cleanFileName = file.originalname.replace(/\s/g, '-');
       const fileName = `${folder}/${Date.now()}-${cleanFileName}`;
       
-      // AQUI ESTAVA O ERRO: Mudamos de 'uploads' para 'imagens'
       const { data, error } = await supabase.storage
         .from('images') 
         .upload(fileName, file.buffer, {
@@ -32,7 +28,6 @@ export const register = async (req, res) => {
         throw new Error('Falha ao fazer upload da imagem no Supabase');
       }
 
-      // Pega a URL pública do bucket 'imagens'
       const { data: urlData } = supabase.storage
         .from('images')
         .getPublicUrl(fileName);
@@ -43,10 +38,7 @@ export const register = async (req, res) => {
     let photoUrl = null;
     let bannerUrl = null;
 
-    // Se houver arquivos, faz o upload
     if (req.files) {
-      // Nota: As pastas 'profiles' e 'banners' são criadas automaticamente pelo Supabase
-      // se não existirem, desde que o bucket 'imagens' exista.
       if (req.files['photo']) {
         photoUrl = await uploadToSupabase(req.files['photo'][0], 'profiles');
       }
