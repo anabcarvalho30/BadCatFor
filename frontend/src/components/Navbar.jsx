@@ -28,7 +28,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="navbar-header">
-        <div className="navbar-container" style={{ justifyContent: 'space-between' }}>
+        <div className="navbar-container">
           
           {/* Logo */}
           <Link to="/" className="navbar-logo">
