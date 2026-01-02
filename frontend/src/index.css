@@ -107,13 +107,14 @@ img {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.user-menu-container > div {
+.user-menu-container>div {
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -175,13 +176,13 @@ img {
 .navbar-user-button {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: #333;
   border-radius: 9999px;
-  padding: 4px 12px 4px 4px;
+  padding: 8px 12px 8px 8px;
   color: #fff;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 1rem;
   border: none;
   font-family: inherit;
 }
@@ -239,7 +240,7 @@ img {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.7);
   z-index: 100;
   display: flex;
   align-items: center;
@@ -293,11 +294,11 @@ img {
   .navbar-nav {
     gap: 16px;
   }
-  
+
   .navbar-user-name {
     display: none;
   }
-  
+
   .navbar-dropdown {
     width: 180px;
   }
