@@ -30,9 +30,8 @@ const Navbar = () => {
       <nav className="navbar-header">
         <div className="navbar-container">
           
-          {/* Logo */}
           <Link to="/" className="navbar-logo">
-            🐱 BadCatFor
+            BadCat Games
           </Link>
           
           {/* Links de navegação */}
@@ -47,7 +46,6 @@ const Navbar = () => {
           <div className="user-menu-container" ref={menuRef}>
             {user ? (
               <>
-                {/* Botão do usuário logado */}
                 <button 
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="navbar-user-button"
@@ -67,7 +65,6 @@ const Navbar = () => {
                   />
                 </button>
 
-                {/* Dropdown menu para usuário logado */}
                 {isUserMenuOpen && (
                   <div className="navbar-dropdown">
                     <Link 
@@ -92,7 +89,6 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                {/* Botão do usuário não logado */}
                 <button 
                   onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                   className="navbar-user-button"
@@ -107,7 +103,6 @@ const Navbar = () => {
                   />
                 </button>
 
-                {/* Dropdown menu para usuário não logado */}
                 {isUserMenuOpen && (
                   <div className="navbar-dropdown">
                     <Link 
