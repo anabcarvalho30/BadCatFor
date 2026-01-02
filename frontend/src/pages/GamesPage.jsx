@@ -17,9 +17,9 @@ const GamesPage = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', marginTop: '20px' }}>
         {games.map(game => (
           <div key={game.id} className="game-card">
-            <img 
-              src={game.image} 
-              alt={game.name} 
+            <img
+              src={game.cover || 'https://via.placeholder.com/250'}  // Use game.cover e uma imagem padrão caso venha vazio
+              alt={game.name}
               style={{ width: '100%', height: '150px', objectFit: 'cover' }}
             />
             <h3>{game.name}</h3>
