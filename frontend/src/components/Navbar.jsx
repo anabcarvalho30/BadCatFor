@@ -1,17 +1,15 @@
 import { useContext, useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { LogOut, User, ChevronDown, Gamepad2, Menu, X } from 'lucide-react';
+import { LogOut, User, ChevronDown, Gamepad2, LogIn, UserPlus } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   
-  // Estados para controlar os menus e o modal sem bibliotecas externas
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
   const menuRef = useRef(null);
 
-  // Fecha o menu se clicar fora dele
   useEffect(() => {
     function handleClickOutside(event) {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -32,88 +30,124 @@ const Navbar = () => {
     <>
       {/* --- HEADER --- */}
       <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-[#222]/95 backdrop-blur supports-[backdrop-filter]:bg-[#222]/60 text-gray-100">
-        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <div className="container mx-auto flex h-16 items-center justify-between px-6">
           
-          {/* 1. Logo */}
+          {/* 1. Logo à esquerda */}
           <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            {/* Se tiver imagem, coloque aqui */}
             <span className="font-bold text-xl">BadCatFor</span>
           </Link>
 
           {/* 2. Navegação Central */}
-          <nav className="hidden md:flex items-center gap-6">
-            <Link to="/" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+          <nav className="hidden md:flex items-center gap-8">
+            <Link 
+              to="/" 
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors px-2 py-1"
+            >
               Home
             </Link>
-            <Link to="/games" className="text-sm font-medium text-gray-300 hover:text-white transition-colors flex items-center gap-1">
+            <Link 
+              to="/games" 
+              className="text-sm font-medium text-gray-300 hover:text-white transition-colors px-2 py-1 flex items-center gap-2"
+            >
               <Gamepad2 size={16} />
               Jogos
             </Link>
           </nav>
 
           {/* 3. Área do Usuário (Direita) */}
-          <div className="flex items-center gap-4">
-            {user ? (
-              <div className="relative" ref={menuRef}>
-                {/* Botão que abre o menu do usuário */}
-                <button 
-                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                  className="flex items-center gap-2 rounded-full border border-gray-700 bg-gray-800 py-1 pl-1 pr-3 text-sm hover:bg-gray-700 transition-colors"
-                >
-                  <img 
-                    src={user.photo || "https://placehold.co/100x100?text=U"} 
-                    alt="Avatar" 
-                    className="h-8 w-8 rounded-full object-cover border border-gray-600"
-                  />
-                  <span className="font-medium max-w-[100px] truncate">{user.name}</span>
-                  <ChevronDown size={14} className={`text-gray-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
-
-                {/* Dropdown Menu (Feito manualmente) */}
-                {isUserMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-56 rounded-md border border-gray-700 bg-[#1a1a1a] p-1 shadow-lg animate-in fade-in zoom-in-95 duration-200">
-                    <div className="px-2 py-1.5 text-sm font-semibold text-gray-200">
-                      Minha Conta
-                    </div>
-                    <div className="h-px bg-gray-700 my-1" />
-                    
-                    <Link 
-                      to={`/user/${user.id}`} 
-                      className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white outline-none"
-                      onClick={() => setIsUserMenuOpen(false)}
-                    >
-                      <User size={16} className="mr-2" />
-                      Perfil
-                    </Link>
-                    
-                    <div className="h-px bg-gray-700 my-1" />
-                    
-                    <button
-                      onClick={() => setShowLogoutDialog(true)}
-                      className="flex w-full cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 outline-none"
-                    >
-                      <LogOut size={16} className="mr-2" />
-                      Sair
-                    </button>
-                  </div>
+          <div className="flex items-center">
+            <div className="relative" ref={menuRef}>
+              {/* Botão do usuário - SEMPRE VISÍVEL */}
+              <button 
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-2 rounded-full border border-gray-700 bg-gray-800 p-2 hover:bg-gray-700 transition-colors"
+              >
+                {user ? (
+                  <>
+                    <img 
+                      src={user.photo || "https://placehold.co/100x100?text=U"} 
+                      alt="Avatar" 
+                      className="h-8 w-8 rounded-full object-cover border border-gray-600"
+                    />
+                    <span className="hidden sm:inline font-medium max-w-[100px] truncate text-sm mr-1">
+                      {user.name}
+                    </span>
+                  </>
+                ) : (
+                  <User size={20} className="text-gray-300" />
                 )}
-              </div>
-            ) : (
-              // Estado Deslogado
-              <div className="flex items-center gap-2">
-                <Link to="/login" className="text-sm font-medium text-gray-300 hover:text-white px-3 py-2">
-                  Login
-                </Link>
-                <Link to="/signup" className="text-sm font-medium bg-[#646cff] hover:bg-[#535bf2] text-white px-4 py-2 rounded-md transition-colors">
-                  Criar Conta
-                </Link>
-              </div>
-            )}
+                <ChevronDown 
+                  size={14} 
+                  className={`text-gray-400 transition-transform ${isUserMenuOpen ? 'rotate-180' : ''}`} 
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isUserMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-56 rounded-md border border-gray-700 bg-[#1a1a1a] p-1 shadow-lg animate-in fade-in zoom-in-95 duration-200">
+                  {user ? (
+                    // MENU PARA USUÁRIO LOGADO
+                    <>
+                      <div className="px-2 py-1.5 text-sm font-semibold text-gray-200">
+                        Minha Conta
+                      </div>
+                      <div className="h-px bg-gray-700 my-1" />
+                      
+                      <Link 
+                        to={`/user/${user.id}`} 
+                        className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white outline-none"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <User size={16} className="mr-2" />
+                        Perfil
+                      </Link>
+                      
+                      <div className="h-px bg-gray-700 my-1" />
+                      
+                      <button
+                        onClick={() => setShowLogoutDialog(true)}
+                        className="flex w-full cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 outline-none"
+                      >
+                        <LogOut size={16} className="mr-2" />
+                        Sair
+                      </button>
+                    </>
+                  ) : (
+                    // MENU PARA USUÁRIO NÃO LOGADO
+                    <>
+                      <div className="px-2 py-1.5 text-sm font-semibold text-gray-200">
+                        Conta
+                      </div>
+                      <div className="h-px bg-gray-700 my-1" />
+                      
+                      <Link 
+                        to="/login" 
+                        className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm text-gray-300 hover:bg-gray-800 hover:text-white outline-none"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <LogIn size={16} className="mr-2" />
+                        Login
+                      </Link>
+                      
+                      <Link 
+                        to="/signup" 
+                        className="flex cursor-pointer items-center rounded-sm px-2 py-1.5 text-sm text-white hover:bg-[#646cff]/10 outline-none"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <UserPlus size={16} className="mr-2" />
+                        <span className="flex-1">Criar Conta</span>
+                        <span className="text-xs bg-[#646cff] px-2 py-0.5 rounded">Novo</span>
+                      </Link>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
 
-      {/* --- MODAL DE LOGOUT (Feito manualmente) --- */}
+      {/* --- MODAL DE LOGOUT --- */}
       {showLogoutDialog && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="w-full max-w-md rounded-lg border border-gray-800 bg-[#1a1a1a] p-6 shadow-lg">
