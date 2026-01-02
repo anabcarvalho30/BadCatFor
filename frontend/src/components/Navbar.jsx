@@ -124,7 +124,7 @@ const Navbar = () => {
                       className="navbar-menu-item"
                       style={{ 
                         color: 'white', 
-                        background: '#646cff',
+                        background: '#b600adff',
                         justifyContent: 'center'
                       }}
                     >

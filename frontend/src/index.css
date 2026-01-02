@@ -131,9 +131,10 @@ img {
   display: flex;
   align-items: center;
 }
+
 /* Logo da Navbar */
 .navbar-logo-img {
-  height: 40px;
+  height: 5rem;
   width: auto;
   object-fit: contain;
   transition: opacity 0.2s ease;
@@ -148,9 +149,8 @@ img {
   display: flex;
   align-items: center;
   text-decoration: none;
-  height: 40px; 
+  height: 40px;
 }
-
 
 .navbar-nav {
   display: flex;
@@ -195,11 +195,10 @@ img {
   top: 100%;
   margin-top: 8px;
   width: 220px;
-  background-color: #1a1a1a;
-  border: 1px solid #333;
+  background-color: #1a1a1a7a;
   border-radius: 6px;
-  padding: 4px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  box-shadow: 0 10px 15px -3px #00000080;
   display: flex;
   z-index: 1000;
 }
