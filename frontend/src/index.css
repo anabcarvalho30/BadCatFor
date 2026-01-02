@@ -8,16 +8,30 @@
   padding: 0;
 }
 
+/* CORREÇÃO DO BODY */
 body {
   margin: 0;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
+/* Conteúdo principal - ajuste conforme sua estrutura */
+#root {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Container principal para conteúdo */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  width: 100%;
+  box-sizing: border-box; /* Importante para incluir padding na largura total */
 }
 
 /* Card do Jogo */
@@ -27,11 +41,13 @@ body {
   padding: 1rem;
   margin-bottom: 1rem;
   border: 1px solid #333;
+  box-sizing: border-box;
 }
 
 img {
   max-width: 100%;
   border-radius: 4px;
+  height: auto;
 }
 
 /* Estilos para Formulários de Login/Cadastro */
@@ -43,12 +59,14 @@ img {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   text-align: center;
+  box-sizing: border-box;
 }
 
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 100%;
 }
 
 .auth-input {
@@ -58,6 +76,8 @@ img {
   border-radius: 4px;
   color: white;
   font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .auth-input:focus {
@@ -74,6 +94,8 @@ img {
   font-weight: bold;
   cursor: pointer;
   transition: background 0.3s;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .auth-btn:hover {
@@ -85,6 +107,7 @@ img {
   display: block;
   color: #aaa;
   font-size: 0.9rem;
+  text-decoration: none;
 }
 
 /* ===== NAVBAR STYLES ===== */
@@ -109,20 +132,21 @@ img {
     opacity: 0;
     transform: translateY(-10px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.user-menu-container>div {
+.user-menu-container > div {
   animation: fadeIn 0.2s ease-out;
 }
 
 /* Estilos específicos para elementos da navbar */
 .navbar-header {
   background-color: rgba(0, 0, 0, 0.95);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .navbar-container {
@@ -131,6 +155,10 @@ img {
   height: 5rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 /* Logo da Navbar */
@@ -150,14 +178,16 @@ img {
   display: flex;
   align-items: center;
   text-decoration: none;
-  height: 40px;
+  height: 5rem;
 }
 
 .navbar-nav {
   display: flex;
   gap: 24px;
   align-items: center;
-  padding: 0 5% 0 60%
+  flex-grow: 1;
+  justify-content: center;
+  padding: 0 1rem;
 }
 
 .navbar-nav-link {
@@ -166,6 +196,11 @@ img {
   color: #fff;
   text-decoration: none;
   font-family: "Bebas Neue", sans-serif;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-nav-link:hover {
+  opacity: 0.8;
 }
 
 .navbar-user-button {
@@ -179,6 +214,11 @@ img {
   cursor: pointer;
   font-size: 1rem;
   border: none;
+  font-family: inherit;
+}
+
+.navbar-user-button:hover {
+  opacity: 0.8;
 }
 
 .navbar-avatar {
@@ -196,12 +236,14 @@ img {
   top: 100%;
   margin-top: 8px;
   width: 220px;
-  background-color: #1a1a1a7a;
+  background-color: rgba(26, 26, 26, 0.95);
   border-radius: 6px;
   padding: 5px;
-  box-shadow: 0 10px 15px -3px #00000080;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
   display: flex;
+  flex-direction: column;
   z-index: 1000;
+  backdrop-filter: blur(10px);
 }
 
 .navbar-menu-item {
@@ -219,10 +261,11 @@ img {
   border-radius: 4px;
   font-family: inherit;
   gap: 8px;
+  box-sizing: border-box;
 }
 
 .navbar-menu-item:hover {
-  background-color: #333;
+  background-color: rgba(51, 51, 51, 0.8);
 }
 
 /* Estilos do Modal de Logout */
@@ -245,9 +288,10 @@ img {
   border: 1px solid #333;
   padding: 24px;
   border-radius: 8px;
-  width: 100%;
+  width: 90%;
   max-width: 400px;
   color: #fff;
+  box-sizing: border-box;
 }
 
 .navbar-btn-cancel {
@@ -259,6 +303,7 @@ img {
   cursor: pointer;
   font-family: inherit;
   font-size: 0.875rem;
+  transition: background 0.2s ease;
 }
 
 .navbar-btn-confirm {
@@ -271,6 +316,7 @@ img {
   font-weight: bold;
   font-family: inherit;
   font-size: 0.875rem;
+  transition: background 0.2s ease;
 }
 
 .navbar-btn-cancel:hover {
@@ -283,15 +329,92 @@ img {
 
 /* Estilos responsivos */
 @media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .navbar-container {
+    height: 4rem;
+    padding: 0 0.5rem;
+  }
+  
+  .navbar-logo-img {
+    height: 4rem;
+  }
+  
+  .navbar-logo {
+    height: 4rem;
+  }
+  
   .navbar-nav {
     gap: 16px;
+    padding: 0 0.5rem;
   }
-
+  
+  .navbar-nav-link {
+    font-size: 1.2rem;
+  }
+  
   .navbar-user-name {
     display: none;
   }
-
+  
   .navbar-dropdown {
     width: 180px;
   }
+  
+  .auth-container {
+    margin: 20px auto;
+    padding: 1.5rem;
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-nav {
+    gap: 12px;
+  }
+  
+  .navbar-nav-link {
+    font-size: 1rem;
+  }
+  
+  .navbar-user-button {
+    padding: 4px 8px 4px 4px;
+  }
+  
+  .game-card {
+    padding: 0.75rem;
+  }
+}
+
+/* Utilitários */
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Garantir que o conteúdo ocupe 100% da altura */
+html, body, #root {
+  height: 100%;
+}
+
+/* Estilo para inputs e botões consistentes */
+input, button, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Estilos de foco para acessibilidade */
+:focus-visible {
+  outline: 2px solid #646cff;
+  outline-offset: 2px;
 }
