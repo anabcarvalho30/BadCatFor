@@ -83,7 +83,7 @@ const Navbar = () => {
                     <button 
                       onClick={() => setShowLogoutDialog(true)}
                       className="navbar-menu-item"
-                      style={{ color: '#ff6b6b', borderTop: '1px solid #333' }}
+                      style={{ color: '#ff6b6b'}}
                     >
                       <LogOut size={16} />
                       <span>Sair</span>
