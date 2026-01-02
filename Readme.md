@@ -116,6 +116,10 @@ Dependendo do projeto, podemos utilizar:
 
 ## Projeto The Campus  
 
+<p align="center">
+  <img src="/Readme/the-campus-logo.png">
+</p>
+
 The Campus é um jogo que será publicado na plataforma Roblox, no qual o jogador precisa fugir de um campus abandonado após dormir durante a aula. No entanto, ele não está sozinho: uma entidade (baseada em um gato 🐈) está nos corredores o caçando. Melhor não ser visto: ele é mais perspicaz do que parece.  
 Temos:  
 * Uma criatura patrulhando os corredores
@@ -123,6 +127,9 @@ Temos:
 * Multiplayer até 4 jogadores
 * Talvez, só talvez, você consiga uma arma. Faça cada tiro valer.
 
+<p align="center">
+  <img src="/Readme/blackboard.png">
+</p>
 ---
 
 ## Observação
