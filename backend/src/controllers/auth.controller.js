@@ -21,7 +21,7 @@ export const register = async (req, res) => {
       
       // AQUI ESTAVA O ERRO: Mudamos de 'uploads' para 'imagens'
       const { data, error } = await supabase.storage
-        .from('imagens') 
+        .from('images') 
         .upload(fileName, file.buffer, {
           contentType: file.mimetype,
           upsert: false
@@ -34,7 +34,7 @@ export const register = async (req, res) => {
 
       // Pega a URL pública do bucket 'imagens'
       const { data: urlData } = supabase.storage
-        .from('imagens')
+        .from('images')
         .getPublicUrl(fileName);
 
       return urlData.publicUrl;
