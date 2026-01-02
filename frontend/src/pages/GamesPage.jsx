@@ -19,10 +19,10 @@ const GamesPage = () => {
           <div key={game.id} className="game-card">
             <img 
               src={game.image} 
-              alt={game.title} 
+              alt={game.name} 
               style={{ width: '100%', height: '150px', objectFit: 'cover' }}
             />
-            <h3>{game.title}</h3>
+            <h3>{game.name}</h3>
             <Link to={`/games/${game.slug}`}>Ver Detalhes</Link>
           </div>
         ))}
