@@ -295,17 +295,7 @@ img {
   background-color: #b91c1c;
 }
 
-/* Estilos responsivos */
-@media (max-width: 768px) {
-  .navbar-nav {
-    gap: 16px;
-  }
-
-  .navbar-user-name {
-    display: none;
-  }
-
-  .navbar-dropdown {
-    width: 180px;
-  }
+.GamesPage{
+  display: flex;
+  flex-direction: row;
 }

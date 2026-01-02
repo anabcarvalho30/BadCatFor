@@ -14,7 +14,7 @@ const GamesPage = () => {
   return (
     <div className="container">
       <h1>Últimos Jogos de Terror</h1>
-      <div>
+      <div className='GamesPage'>
         {games.map(game => (
           <div key={game.id} className="game-card">
             <img
