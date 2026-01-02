@@ -45,10 +45,10 @@ A BadCat Games é formada por estudantes/desenvolvedores iniciantes, cada um con
 ### Cauã Rodrigues
 **Idade:** 18 anos  
 **Cargo:** Programador | Modelador 3D  
-**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+**GitHub:** https://github.com/CauaRodrigues08
 
 **Experiência prévia:**  
-Participação em projetos de desenvolvimento de jogos na área de programação utilizando GDScript na plataforma Godot. Atuação atual em modelagem de assets 3D para jogos. Desenvolvimento de projetos web com HTML, CSS (Puro, Bootstrap e Tailwind), JavaScript, React e Dart com Flutter. Experiência com Java e bancos de dados como MongoDB, MongoDB + Prisma e SQLite.
+Participação em projetos de desenvolvimento de jogos na área de programação utilizando GDScript na plataforma Godot. Atuação atual em modelagem de assets 3D para jogos. Desenvolvimento de projetos web com HTML, CSS (Puro, Bootstrap e Tailwind), JavaScript, React e Dart com Flutter; Experiência com Java e bancos de dados como MongoDB, MongoDB + Prisma e SQLite; Desenvolvimento de protótipos na linguagem Swift.
 
 ---
 
@@ -114,7 +114,14 @@ Dependendo do projeto, podemos utilizar:
 
 ---
 
-## Projeto The Campus
+## Projeto The Campus  
+
+The Campus é um jogo que será publicado na plataforma Roblox, no qual o jogador precisa fugir de um campus abandonado após dormir durante a aula. No entanto, ele não está sozinho: uma entidade (baseada em um gato 🐈) está nos corredores o caçando. Melhor não ser visto: ele é mais perspicaz do que parece.  
+Temos:  
+* Uma criatura patrulhando os corredores
+* Itens que ajudarão na fuga
+* Multiplayer até 4 jogadores
+* Talvez, só talvez, você consiga uma arma. Faça cada tiro valer.
 
 ---
 
