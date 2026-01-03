@@ -14,7 +14,7 @@ const Home = () => {
       }}>
         <div className="container">
           <h1 style={{ fontSize: '3.5rem', marginBottom: '20px', textShadow: '0 0 10px #000' }}>
-            Bem-vindo ao <span style={{ color: '#646cff' }}>BadCatFor</span>
+            Bem-vindo ao <span>BadCatFor</span>
           </h1>
           <p style={{ fontSize: '1.2rem', color: '#ccc', maxWidth: '700px', margin: '0 auto 40px' }}>
             A comunidade definitiva para amantes do terror. Descubra novos pesadelos, 
@@ -50,21 +50,21 @@ const Home = () => {
           
           {/* Card 1 */}
           <div className="game-card" style={{ textAlign: 'center', padding: '30px' }}>
-            <div style={{ color: '#646cff', marginBottom: '15px' }}><Ghost size={48} /></div>
+            <div><Ghost size={48} /></div>
             <h3>Jogos Assustadores</h3>
             <p style={{ color: '#aaa' }}>Uma curadoria dos melhores (e piores) jogos de terror, dos clássicos aos indies obscuros.</p>
           </div>
 
           {/* Card 2 */}
           <div className="game-card" style={{ textAlign: 'center', padding: '30px' }}>
-            <div style={{ color: '#646cff', marginBottom: '15px' }}><Users size={48} /></div>
+            <div><Users size={48} /></div>
             <h3>Comunidade Ativa</h3>
             <p style={{ color: '#aaa' }}>Conecte-se com outros jogadores, personalize seu perfil e crie sua reputação no fórum.</p>
           </div>
 
           {/* Card 3 */}
           <div className="game-card" style={{ textAlign: 'center', padding: '30px' }}>
-            <div style={{ color: '#646cff', marginBottom: '15px' }}><Gamepad2 size={48} /></div>
+            <div><Gamepad2 size={48} /></div>
             <h3>Reviews Sinceros</h3>
             <p style={{ color: '#aaa' }}>Leia e escreva análises detalhadas. Saiba se vale a pena levar aquele susto antes de comprar.</p>
           </div>
