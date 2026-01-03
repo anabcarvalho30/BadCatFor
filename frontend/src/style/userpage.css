@@ -1,0 +1,227 @@
+/* UserPage Styles */
+.user-page-container {
+  position: relative;
+  margin-top: -60px;
+  padding: 0 20px;
+  max-width: 1000px;
+  margin: -80px auto 0 auto;
+}
+
+.banner-user {
+  height: 250px;
+  width: 100%;
+  background-color: #222;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.8));
+}
+
+.banner-edit-container {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: rgba(0,0,0,0.8);
+  padding: 15px;
+  border-radius: 8px;
+  backdrop-filter: blur(4px);
+  border: 1px solid #444;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 300px;
+}
+
+.banner-label {
+  color: #ccc;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.banner-input {
+  font-size: 0.85rem;
+  padding: 8px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.profile-avatar-container {
+  position: relative;
+  z-index: 10;
+}
+
+.profile-avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 5px solid #121212;
+  object-fit: cover;
+  background: #222;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.avatar-edit-overlay {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: #646cff;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  border: 2px solid #121212;
+}
+
+.profile-info-container {
+  flex: 1;
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.profile-info {
+  margin-bottom: 5px;
+}
+
+.profile-name {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.profile-name-input {
+  font-size: 1.8rem;
+  font-weight: bold;
+  padding: 5px;
+  background: rgba(0,0,0,0.5);
+}
+
+.profile-username {
+  color: #ccc;
+  font-size: 1rem;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.edit-btn {
+  background: #333;
+  border: 1px solid #555;
+  cursor: pointer;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.2s;
+  font-size: 0.9rem;
+}
+
+.edit-btn:hover {
+  background: #444;
+}
+
+.cancel-btn {
+  background: #444;
+  padding: 8px 12px;
+}
+
+.save-btn {
+  background: #2ecc71;
+  padding: 8px 12px;
+}
+
+.edit-details-container {
+  margin: 0 0 30px 0;
+  text-align: left;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.edit-details-title {
+  margin-top: 0;
+  color: #646cff;
+}
+
+.post-input-container {
+  margin-bottom: 30px;
+  background: #222;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #333;
+}
+
+.post-input-header {
+  display: flex;
+  gap: 15px;
+}
+
+.post-input-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.post-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: white;
+  resize: none;
+  font-size: 1rem;
+  outline: none;
+  margin-top: 10px;
+  font-family: inherit;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  border-top: 1px solid #333;
+  padding-top: 10px;
+}
+
+.post-button {
+  padding: 8px 20px;
+  border-radius: 20px;
+}
+
+.divider {
+  border-color: #333;
+  margin: 30px 0;
+}
+
+.empty-posts {
+  padding: 40px;
+  text-align: center;
+  color: #555;
+  border: 2px dashed #333;
+  border-radius: 12px;
+}
+
+.empty-posts p {
+  margin: 0;
+}
