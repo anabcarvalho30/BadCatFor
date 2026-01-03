@@ -20,7 +20,7 @@ const GamesPage = () => {
             <img
               src={game.cover || 'https://via.placeholder.com/250'}  // Use game.cover e uma imagem padrão caso venha vazio
               alt={game.name}
-              style={{ width: '100%', height: '150px', objectFit: 'cover' }}
+              style={{ width: '100%', height: '25rem', objectFit: 'cover' }}
             />
             <h3>{game.name}</h3>
             <Link to={`/games/${game.slug}`}>Ver Detalhes</Link>
