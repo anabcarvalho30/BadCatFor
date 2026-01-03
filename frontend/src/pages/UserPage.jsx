@@ -75,7 +75,7 @@ const UserPage = () => {
           {/* FOTO DE PERFIL */}
           <div className="profile-avatar-container">
             <img 
-              src={isEditing ? (editForm.photo || "https://placehold.co/150?text=Foto") : (profileUser.photo || "https://placehold.co/150?text=U")} 
+              src={isEditing ? (editForm.photo || "https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/nopicuser.jpgo") : (profileUser.photo || "https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/nopicuser.jpg")} 
               alt="Avatar" 
               className="profile-avatar"
             />
