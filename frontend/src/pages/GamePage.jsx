@@ -431,14 +431,7 @@ const GamePage = () => {
             <div className="quick-actions">
               <button 
                 className="quick-action-btn"
-                onClick={() => navigate(`/games/${slug}/rate`)}
-              >
-                <Star size={16} />
-                Avaliar
-              </button>
-              <button 
-                className="quick-action-btn"
-                onClick={() => navigate(`/games/${slug}/review`)}
+                onClick={() => alert('Funcionalidade de review em desenvolvimento')}
               >
                 <MessageSquare size={16} />
                 Escrever Review
