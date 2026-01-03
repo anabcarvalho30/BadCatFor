@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div>
       <section style={{
-        background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url("https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop")',
+        background: 'linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url("https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/BadCatBanner.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         padding: '100px 20px',
