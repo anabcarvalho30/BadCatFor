@@ -2,6 +2,7 @@
 @import url(style/navbar.css);
 @import url(style/forms.css);
 @import url(style/userpage.css);
+@import url(style/home.css);
 
 :root {
   font-family: "Jost", sans-serif;  background-color: #1a1a1a;
