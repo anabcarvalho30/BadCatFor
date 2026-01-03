@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { 
   ArrowLeft, 
   Star, 
@@ -17,7 +17,6 @@ import {
 
 const GamePage = () => {
   const { slug } = useParams();
-  const navigate = useNavigate();
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -31,22 +30,48 @@ const GamePage = () => {
     const fetchGameData = async () => {
       try {
         setLoading(true);
+        console.log('Buscando jogo com slug:', slug); // LOG
         
-        // Buscar jogo pelo slug
+        // PRIMEIRO: Verificar se estamos conseguindo acessar a API
+        const testResponse = await fetch('http://localhost:3000/api/games');
+        console.log('Teste API games:', testResponse.ok); // LOG
+        
+        // TENTATIVA 1: Buscar pela rota específica
         const gameResponse = await fetch(`http://localhost:3000/api/games/${slug}`);
+        console.log('Resposta da API:', gameResponse.status, gameResponse.statusText); // LOG
+        
         if (!gameResponse.ok) {
-          throw new Error('Jogo não encontrado');
+          console.log('Jogo não encontrado na rota específica, tentando buscar na listagem...');
+          
+          // TENTATIVA 2: Buscar na listagem e filtrar pelo slug
+          const allGamesResponse = await fetch('http://localhost:3000/api/games');
+          if (allGamesResponse.ok) {
+            const allGames = await allGamesResponse.json();
+            console.log('Todos os jogos:', allGames); // LOG
+            
+            const foundGame = allGames.find(g => g.slug === slug);
+            console.log('Jogo encontrado na listagem:', foundGame); // LOG
+            
+            if (foundGame) {
+              setGame(foundGame);
+              setError(null);
+            } else {
+              throw new Error(`Jogo com slug "${slug}" não encontrado na listagem`);
+            }
+          } else {
+            throw new Error('Não foi possível carregar a listagem de jogos');
+          }
+        } else {
+          const gameData = await gameResponse.json();
+          console.log('Dados do jogo recebidos:', gameData); // LOG
+          setGame(gameData);
+          setError(null);
         }
-        const gameData = await gameResponse.json();
         
-        // Buscar comentários do jogo
-        const commentsResponse = await fetch(`http://localhost:3000/api/games/${slug}/comments`);
-        const commentsData = await commentsResponse.ok ? await commentsResponse.json() : [];
-        
-        setGame(gameData);
-        setComments(commentsData);
       } catch (err) {
+        console.error('Erro ao buscar jogo:', err);
         setError(err.message);
+        setGame(null);
       } finally {
         setLoading(false);
       }
@@ -54,8 +79,13 @@ const GamePage = () => {
 
     if (slug) {
       fetchGameData();
+    } else {
+      setError('Slug não fornecido');
+      setLoading(false);
     }
   }, [slug]);
+
+  // Restante do código permanece o mesmo...
 
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
