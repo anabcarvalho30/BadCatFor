@@ -16,15 +16,16 @@ const GamesPage = () => {
       <h1>Nossos jogos!</h1>
       <div className='GamesPage'>
         {games.map(game => (
-          <div key={game.id} className="game-card">
-            <img
-              src={game.cover || 'https://via.placeholder.com/250'} 
-              alt={game.name}
-              style={{ width: '100%', height: '25rem', objectFit: 'cover' }}
-            />
-            <h3>{game.name}</h3>
-            <Link to={`/games/${game.slug}`}>Ver Detalhes</Link>
-          </div>
+          <Link to={`/games/${game.slug}`} className="game-card-link">
+            <div key={game.id} className="game-card">
+              <img
+                src={game.cover || 'https://via.placeholder.com/250'}
+                alt={game.name}
+                className="game-card-image"
+              />
+              <h3>{game.name}</h3>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

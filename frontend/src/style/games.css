@@ -1,17 +1,31 @@
 .game-card {
-  padding: 1rem;
-  box-sizing: border-box;
+    padding: 1rem;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    display: flex;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
-.game-card h3 {
-  
-}
+
 img {
-  max-width: 100%;
-  border-radius: 4px;
+    max-width: 100%;
+    border-radius: 4px;
 }
 
 .GamesPage {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.game-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+.game-card:hover {
+    transform: scale(1.02);
+    border-color: var(--cor-principal, #8200b6ff);
 }
