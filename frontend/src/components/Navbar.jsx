@@ -123,7 +123,13 @@ const Navbar = () => {
                     <Link 
                       to="/signup" 
                       onClick={() => setIsUserMenuOpen(false)}
-                      className="navbar-menu-item">
+                      className="navbar-menu-item"
+                      style={{ 
+                        color: 'white', 
+                        background: '#8200b6ff',
+                        justifyContent: 'center'
+                      }}
+                    >
                       <UserPlus size={16} />
                       <span>Criar Conta</span>
                     </Link>

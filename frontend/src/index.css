@@ -5,7 +5,7 @@
   color: #ffffff;
   margin: 0;
   padding: 0;
-  --cor-principal: #b600adff;
+  --cor-principal: #8200b6ff;
 }
 
 /* CORREÇÃO: Adicionei apenas flex-direction: column e ajustei o #root */
@@ -245,10 +245,6 @@ img {
   border-radius: 4px;
   font-family: inherit;
   gap: 8px;
-}
-
-.navbar-menu-item a {
-  background-color: var(--cor-principal);
 }
 
 .navbar-menu-item:hover {
