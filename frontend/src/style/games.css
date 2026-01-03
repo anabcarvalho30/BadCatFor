@@ -1,0 +1,17 @@
+.game-card {
+  padding: 1rem;
+  box-sizing: border-box;
+}
+.game-card h3 {
+  
+}
+img {
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.GamesPage {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}

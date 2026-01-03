@@ -13,7 +13,7 @@ const GamesPage = () => {
 
   return (
     <div className="container">
-      <h1>Últimos Jogos de Terror</h1>
+      <h1>Nossos jogos!</h1>
       <div className='GamesPage'>
         {games.map(game => (
           <div key={game.id} className="game-card">
