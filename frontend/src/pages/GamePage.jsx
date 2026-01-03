@@ -1,460 +1,372 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
-  ArrowLeft, 
-  Star, 
-  Heart, 
-  Share2, 
-  MessageSquare,
-  ChevronDown,
-  ChevronUp,
-  Clock,
-  Users,
-  Globe,
-  Gamepad2,
-  Calendar
+  ArrowLeft, Star, Heart, Share2, MessageSquare, ChevronDown, 
+  ChevronUp, Clock, Users, Globe, Gamepad2, Calendar, AlertCircle 
 } from 'lucide-react';
+
+// Dados padrão para preencher lacunas da API (Mock Data)
+const DEFAULT_GAME_DETAILS = {
+  rating: 4.5,
+  reviewCount: 0,
+  price: 0,
+  onSale: false,
+  releaseDate: new Date().toISOString(),
+  playtime: 'TBD',
+  players: 'Single Player',
+  genre: 'Ação',
+  developer: 'Desconhecido',
+  publisher: 'Desconhecido',
+  platforms: ['PC'],
+  screenshots: [],
+  features: [],
+  systemRequirements: {
+    minimum: { os: 'Windows 10', processor: 'i5', memory: '8GB', graphics: 'GTX 1060', storage: '50GB' }
+  }
+};
 
 const GamePage = () => {
   const { slug } = useParams();
+  
+  // Estados
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  
+  // Estado de Comentários
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [submittingComment, setSubmittingComment] = useState(false);
 
-  // Buscar dados do jogo
+  // 1. Buscar Dados do Jogo e Comentários
   useEffect(() => {
-    const fetchGameData = async () => {
+    const fetchData = async () => {
+      if (!slug) return;
+      
+      setLoading(true);
       try {
-        setLoading(true);
-        console.log('Buscando jogo com slug:', slug); // LOG
-        
-        // PRIMEIRO: Verificar se estamos conseguindo acessar a API
-        const testResponse = await fetch('http://localhost:3000/api/games');
-        console.log('Teste API games:', testResponse.ok); // LOG
-        
-        // TENTATIVA 1: Buscar pela rota específica
-        const gameResponse = await fetch(`http://localhost:3000/api/games/${slug}`);
-        console.log('Resposta da API:', gameResponse.status, gameResponse.statusText); // LOG
-        
-        if (!gameResponse.ok) {
-          console.log('Jogo não encontrado na rota específica, tentando buscar na listagem...');
-          
-          // TENTATIVA 2: Buscar na listagem e filtrar pelo slug
-          const allGamesResponse = await fetch('http://localhost:3000/api/games');
-          if (allGamesResponse.ok) {
-            const allGames = await allGamesResponse.json();
-            console.log('Todos os jogos:', allGames); // LOG
-            
-            const foundGame = allGames.find(g => g.slug === slug);
-            console.log('Jogo encontrado na listagem:', foundGame); // LOG
-            
-            if (foundGame) {
-              setGame(foundGame);
-              setError(null);
-            } else {
-              throw new Error(`Jogo com slug "${slug}" não encontrado na listagem`);
-            }
-          } else {
-            throw new Error('Não foi possível carregar a listagem de jogos');
-          }
+        // Fetch Jogo
+        const gameRes = await fetch(`http://localhost:3000/api/games/${slug}`);
+        let gameData = null;
+
+        if (gameRes.ok) {
+          gameData = await gameRes.json();
         } else {
-          const gameData = await gameResponse.json();
-          console.log('Dados do jogo recebidos:', gameData); // LOG
-          setGame(gameData);
-          setError(null);
+          // Fallback: Tenta buscar na lista completa se a rota específica falhar
+          console.warn('Rota específica falhou, tentando buscar na lista...');
+          const allGamesRes = await fetch('http://localhost:3000/api/games');
+          if (!allGamesRes.ok) throw new Error('Falha ao conectar com o servidor');
+          
+          const allGames = await allGamesRes.json();
+          gameData = allGames.find(g => g.slug === slug);
         }
-        
+
+        if (!gameData) throw new Error('Jogo não encontrado');
+
+        // Mescla dados da API com os dados padrão (DEFAULT_GAME_DETAILS)
+        // Isso garante que a UI não quebre se faltar campos na API
+        setGame({ ...DEFAULT_GAME_DETAILS, ...gameData });
+
+        // Fetch Comentários (Opcional: Pode ser feito em uma rota separada)
+        try {
+          const commentsRes = await fetch(`http://localhost:3000/api/games/${slug}/comments`);
+          if (commentsRes.ok) {
+            const commentsData = await commentsRes.json();
+            setComments(commentsData);
+          }
+        } catch (e) {
+          console.error("Erro ao carregar comentários, iniciando lista vazia.");
+        }
+
       } catch (err) {
-        console.error('Erro ao buscar jogo:', err);
+        console.error('Erro fatal:', err);
         setError(err.message);
-        setGame(null);
       } finally {
         setLoading(false);
       }
     };
 
-    if (slug) {
-      fetchGameData();
-    } else {
-      setError('Slug não fornecido');
-      setLoading(false);
-    }
+    fetchData();
   }, [slug]);
 
-  // Restante do código permanece o mesmo...
-
+  // 2. Handler para Adicionar Comentário
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
+    setSubmittingComment(true);
 
     try {
       const response = await fetch(`http://localhost:3000/api/games/${slug}/comments`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: newComment }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          content: newComment,
+          userId: 1, // Exemplo: Substituir pelo ID do usuário logado real
+          gameId: game.id 
+        }),
       });
 
       if (response.ok) {
         const addedComment = await response.json();
-        setComments([...comments, addedComment]);
+        // Adiciona o comentário retornado à lista (optimistic update ou resposta da API)
+        setComments(prev => [addedComment, ...prev]); 
         setNewComment('');
+      } else {
+        alert('Erro ao enviar comentário.');
       }
     } catch (err) {
-      console.error('Erro ao adicionar comentário:', err);
+      console.error('Erro no envio:', err);
+    } finally {
+      setSubmittingComment(false);
     }
   };
 
+  // Renderização de Loading
   if (loading) {
     return (
-      <div className="container">
-        <div className="loading-container">
-          <h2>Carregando jogo...</h2>
-        </div>
+      <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
+  // Renderização de Erro
   if (error || !game) {
     return (
-      <div className="container">
-        <div className="game-not-found">
-          <h1>Jogo não encontrado</h1>
-          <p>O jogo que você está procurando não existe ou foi removido.</p>
-          <Link to="/games" className="auth-btn">
-            <ArrowLeft size={20} />
-            Voltar para Jogos
-          </Link>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-4">
+        <AlertCircle size={64} className="text-red-500 mb-4" />
+        <h1 className="text-2xl font-bold mb-2">Ops! Algo deu errado.</h1>
+        <p className="text-gray-400 mb-6">{error || 'Jogo não encontrado.'}</p>
+        <Link to="/games" className="flex items-center gap-2 px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 transition">
+          <ArrowLeft size={20} /> Voltar para Jogos
+        </Link>
       </div>
     );
   }
 
-  // Dados padrão (você pode adicionar estes campos ao seu model depois)
-  const gameDetails = {
-    rating: 4.5,
-    reviewCount: 1247,
-    price: 249.90,
-    onSale: false,
-    releaseDate: '2024-10-08',
-    playtime: '15-20 horas',
-    players: 'Single Player',
-    genre: 'Terror Psicológico',
-    developer: 'Desenvolvedor Desconhecido',
-    publisher: 'Distribuidora Desconhecida',
-    platforms: ['PC', 'Console'],
-    screenshots: [
-      'https://via.placeholder.com/800x450/333/666?text=Screenshot+1',
-      'https://via.placeholder.com/800x450/333/666?text=Screenshot+2',
-      'https://via.placeholder.com/800x450/333/666?text=Screenshot+3',
-    ],
-    features: [
-      'Jogabilidade envolvente',
-      'Gráficos de alta qualidade',
-      'História cativante',
-    ],
-    systemRequirements: {
-      minimum: {
-        os: 'Windows 10',
-        processor: 'Intel Core i5',
-        memory: '8 GB RAM',
-        graphics: 'NVIDIA GTX 1060',
-        storage: '50 GB'
-      },
-      recommended: {
-        os: 'Windows 11',
-        processor: 'Intel Core i7',
-        memory: '16 GB RAM',
-        graphics: 'NVIDIA RTX 2060',
-        storage: '50 GB SSD'
-      }
-    }
-  };
+  // Cálculos de preço para exibição
+  const currentPrice = game.onSale ? (game.price * 0.8) : game.price;
 
   return (
-    <div className="game-page">
-      {/* Hero Section com Cover */}
+    <div className="game-page bg-[#121212] min-h-screen text-gray-100 font-sans">
+      
+      {/* --- HERO SECTION --- */}
       <div 
-        className="game-hero"
+        className="relative h-[500px] w-full bg-cover bg-center"
         style={{ 
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(${game.cover || 'https://via.placeholder.com/1920x600/222/555?text=Capa+do+Jogo'})` 
+          backgroundImage: `linear-gradient(to bottom, rgba(18,18,18,0.3), rgba(18,18,18,1)), url(${game.cover || 'https://via.placeholder.com/1920x600/222/555?text=Sem+Capa'})` 
         }}
       >
-        <div className="container">
-          <Link to="/games" className="back-button">
-            <ArrowLeft size={20} />
-            Voltar para Jogos
+        <div className="container mx-auto px-4 h-full flex flex-col justify-end pb-12 relative z-10">
+          <Link to="/games" className="absolute top-8 left-4 flex items-center gap-2 text-white hover:text-blue-400 transition">
+            <ArrowLeft size={20} /> Voltar
           </Link>
-          
-          <div className="game-hero-content">
-            <div className="game-header">
-              <h1 className="game-title">{game.name}</h1>
-              
-              <div className="game-rating">
-                <div className="stars">
-                  {[...Array(5)].map((_, i) => (
-                    <Star 
-                      key={i} 
-                      size={20} 
-                      fill={i < Math.floor(gameDetails.rating) ? "#FFD700" : "none"} 
-                      color="#FFD700" 
-                    />
-                  ))}
-                  <span className="rating-text">
-                    {gameDetails.rating}/5 ({gameDetails.reviewCount} reviews)
-                  </span>
-                </div>
-              </div>
 
-              <div className="game-tags">
-                <span className="game-tag">{gameDetails.genre}</span>
-                <span className="game-tag">{gameDetails.players}</span>
-                {gameDetails.platforms.map((platform, index) => (
-                  <span key={index} className="game-tag platform-tag">{platform}</span>
+          <h1 className="text-5xl font-bold mb-4 text-white drop-shadow-lg">{game.name}</h1>
+
+          <div className="flex flex-wrap items-center gap-6 mb-6">
+            {/* Rating */}
+            <div className="flex items-center gap-2 bg-black/40 px-3 py-1 rounded-lg backdrop-blur-sm">
+              <div className="flex">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={18} fill={i < Math.floor(game.rating) ? "#FFD700" : "none"} color="#FFD700" />
                 ))}
               </div>
+              <span className="text-sm font-medium">{game.rating} ({game.reviewCount} reviews)</span>
             </div>
 
-            <div className="game-actions">
-              <div className="price-section">
-                {gameDetails.onSale ? (
-                  <>
-                    <span className="original-price">R$ {gameDetails.price.toFixed(2)}</span>
-                    <span className="sale-price">R$ {(gameDetails.price * 0.8).toFixed(2)}</span>
-                    <span className="discount-badge">-20%</span>
-                  </>
-                ) : (
-                  <span className="current-price">R$ {gameDetails.price.toFixed(2)}</span>
-                )}
-              </div>
+            {/* Tags */}
+            <div className="flex gap-2">
+              <span className="px-3 py-1 bg-blue-600/80 rounded-full text-xs font-semibold uppercase">{game.genre}</span>
+              {game.platforms?.map(p => (
+                <span key={p} className="px-3 py-1 bg-gray-700/80 rounded-full text-xs font-semibold uppercase">{p}</span>
+              ))}
+            </div>
+          </div>
 
-              <div className="action-buttons">
-                <button className="action-btn primary-btn" onClick={() => alert('Funcionalidade de compra em desenvolvimento!')}>
-                  Comprar Agora
-                </button>
-                <button 
-                  className={`action-btn like-btn ${isLiked ? 'liked' : ''}`}
-                  onClick={() => setIsLiked(!isLiked)}
-                >
-                  <Heart size={20} fill={isLiked ? "#ff4757" : "none"} />
-                  {isLiked ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
-                </button>
-                <button className="action-btn share-btn" onClick={() => navigator.clipboard.writeText(window.location.href)}>
-                  <Share2 size={20} />
-                  Compartilhar
-                </button>
+          {/* Action Bar */}
+          <div className="flex flex-wrap items-center gap-4 bg-gray-800/60 p-4 rounded-xl backdrop-blur-md border border-gray-700 max-w-fit">
+            <div className="flex flex-col mr-4">
+              {game.onSale && <span className="text-xs text-gray-400 line-through">R$ {game.price?.toFixed(2)}</span>}
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-bold text-white">
+                  {currentPrice > 0 ? `R$ ${currentPrice.toFixed(2)}` : 'Grátis'}
+                </span>
+                {game.onSale && <span className="bg-green-500 text-black text-xs font-bold px-2 py-0.5 rounded">-20%</span>}
               </div>
             </div>
+
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-bold transition transform hover:scale-105">
+              Comprar Agora
+            </button>
+            
+            <button 
+              onClick={() => setIsLiked(!isLiked)}
+              className={`p-3 rounded-lg transition border ${isLiked ? 'bg-red-500/20 border-red-500 text-red-500' : 'bg-gray-700 hover:bg-gray-600 border-transparent'}`}
+            >
+              <Heart size={24} fill={isLiked ? "currentColor" : "none"} />
+            </button>
+            
+            <button 
+              className="p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
+              onClick={() => navigator.clipboard.writeText(window.location.href)}
+            >
+              <Share2 size={24} />
+            </button>
           </div>
         </div>
       </div>
 
-      <div className="container game-content">
-        <div className="game-main-content">
-          {/* Descrição do Jogo */}
-          <section className="game-section">
-            <h2 className="section-title">Sobre o Jogo</h2>
-            <div className={`game-description ${showFullDescription ? 'expanded' : ''}`}>
-              <p>{game.description}</p>
-              
-              <div className="game-features">
-                <h3>Características Principais</h3>
-                <ul>
-                  {gameDetails.features.map((feature, index) => (
-                    <li key={index} className="feature-item">
-                      <Star size={16} />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <button 
-                className="toggle-description-btn"
-                onClick={() => setShowFullDescription(!showFullDescription)}
-              >
-                {showFullDescription ? (
-                  <>
-                    <ChevronUp size={16} />
-                    Mostrar menos
-                  </>
-                ) : (
-                  <>
-                    <ChevronDown size={16} />
-                    Continuar lendo
-                  </>
-                )}
-              </button>
+      {/* --- CONTENT GRID --- */}
+      <div className="container mx-auto px-4 py-12 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Main Column */}
+        <div className="lg:col-span-2 space-y-12">
+          
+          {/* About */}
+          <section>
+            <h2 className="text-2xl font-bold mb-4 border-l-4 border-blue-500 pl-4">Sobre o Jogo</h2>
+            <div className={`text-gray-300 leading-relaxed overflow-hidden transition-all ${showFullDescription ? 'max-h-full' : 'max-h-32'}`}>
+              <p>{game.description || "Descrição não disponível."}</p>
             </div>
+            <button 
+              onClick={() => setShowFullDescription(!showFullDescription)}
+              className="mt-2 text-blue-400 hover:text-blue-300 flex items-center gap-1 text-sm font-medium"
+            >
+              {showFullDescription ? <><ChevronUp size={16}/> Mostrar menos</> : <><ChevronDown size={16}/> Ler mais</>}
+            </button>
+
+            {/* Features List */}
+            {game.features && game.features.length > 0 && (
+              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {game.features.map((feat, i) => (
+                  <div key={i} className="flex items-center gap-2 text-sm text-gray-400">
+                    <Star size={14} className="text-blue-500" /> {feat}
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
 
-          {/* Screenshots Gallery */}
-          {gameDetails.screenshots.length > 0 && (
-            <section className="game-section">
-              <h2 className="section-title">Capturas de Tela</h2>
-              <div className="screenshots-grid">
-                {gameDetails.screenshots.map((screenshot, index) => (
-                  <div key={index} className="screenshot-thumb">
-                    <img 
-                      src={screenshot} 
-                      alt={`Screenshot ${index + 1} de ${game.name}`}
-                      onClick={() => window.open(screenshot, '_blank')}
-                    />
-                  </div>
+          {/* Gallery */}
+          {game.screenshots && game.screenshots.length > 0 && (
+            <section>
+              <h2 className="text-2xl font-bold mb-4 border-l-4 border-blue-500 pl-4">Galeria</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {game.screenshots.map((src, idx) => (
+                  <img 
+                    key={idx} 
+                    src={src} 
+                    alt={`Screenshot ${idx}`} 
+                    className="rounded-lg hover:opacity-80 transition cursor-pointer border border-gray-700"
+                    onClick={() => window.open(src, '_blank')}
+                  />
                 ))}
               </div>
             </section>
           )}
 
-          {/* Informações do Jogo */}
-          <section className="game-section">
-            <h2 className="section-title">Informações do Jogo</h2>
-            <div className="game-info-grid">
-              <div className="info-item">
-                <Calendar size={20} />
-                <div>
-                  <span className="info-label">Data de Lançamento</span>
-                  <span className="info-value">
-                    {new Date(gameDetails.releaseDate).toLocaleDateString('pt-BR')}
-                  </span>
-                </div>
-              </div>
-              <div className="info-item">
-                <Clock size={20} />
-                <div>
-                  <span className="info-label">Tempo de Jogo</span>
-                  <span className="info-value">{gameDetails.playtime}</span>
-                </div>
-              </div>
-              <div className="info-item">
-                <Users size={20} />
-                <div>
-                  <span className="info-label">Modo de Jogo</span>
-                  <span className="info-value">{gameDetails.players}</span>
-                </div>
-              </div>
-              <div className="info-item">
-                <Gamepad2 size={20} />
-                <div>
-                  <span className="info-label">Desenvolvedor</span>
-                  <span className="info-value">{gameDetails.developer}</span>
-                </div>
-              </div>
-              <div className="info-item">
-                <Globe size={20} />
-                <div>
-                  <span className="info-label">Distribuidora</span>
-                  <span className="info-value">{gameDetails.publisher}</span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* Seção de Comentários */}
-          <section className="game-section">
-            <h2 className="section-title">Comentários ({comments.length})</h2>
+          {/* Comments Section */}
+          <section className="bg-gray-800/30 p-6 rounded-xl border border-gray-700">
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
+              <MessageSquare className="text-blue-500"/> Comentários ({comments.length})
+            </h2>
             
-            {/* Formulário para novo comentário */}
-            <div className="comment-form">
-              <textarea
-                className="comment-input"
-                placeholder="Deixe seu comentário sobre este jogo..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                rows={3}
-              />
-              <button 
-                className="auth-btn comment-submit-btn"
-                onClick={handleAddComment}
-                disabled={!newComment.trim()}
-              >
-                <MessageSquare size={18} />
-                Enviar Comentário
-              </button>
+            <div className="flex gap-4 mb-8">
+              <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold">EU</div>
+              <div className="flex-1">
+                <textarea
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="O que você achou deste jogo?"
+                  className="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-white focus:outline-none focus:border-blue-500 transition resize-none h-24"
+                />
+                <div className="flex justify-end mt-2">
+                  <button 
+                    onClick={handleAddComment}
+                    disabled={!newComment.trim() || submittingComment}
+                    className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white px-4 py-2 rounded-lg text-sm font-medium transition"
+                  >
+                    {submittingComment ? 'Enviando...' : 'Publicar Comentário'}
+                  </button>
+                </div>
+              </div>
             </div>
 
-            {/* Lista de Comentários */}
-            <div className="comments-list">
-              {comments.length > 0 ? (
-                comments.map((comment) => (
-                  <div key={comment.id} className="comment-item">
-                    <div className="comment-header">
-                      <div className="comment-author">
-                        <img 
-                          src={comment.user?.photo || 'https://via.placeholder.com/40/333/fff?text=U'} 
-                          alt={comment.user?.name || 'Usuário'}
-                          className="comment-avatar"
-                        />
-                        <div>
-                          <span className="comment-author-name">{comment.user?.name || 'Anônimo'}</span>
-                          <span className="comment-date">
-                            {new Date(comment.createdAt).toLocaleDateString('pt-BR')}
-                          </span>
-                        </div>
-                      </div>
+            <div className="space-y-6">
+              {comments.length > 0 ? comments.map((comment, index) => (
+                <div key={comment.id || index} className="flex gap-4 border-b border-gray-700 pb-6 last:border-0">
+                  <img 
+                    src={comment.user?.photo || 'https://via.placeholder.com/40'} 
+                    alt="User" 
+                    className="w-10 h-10 rounded-full bg-gray-700"
+                  />
+                  <div>
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="font-bold text-white">{comment.user?.name || 'Usuário Anônimo'}</span>
+                      <span className="text-xs text-gray-500">{new Date(comment.createdAt || Date.now()).toLocaleDateString()}</span>
                     </div>
-                    <div className="comment-content">
-                      <p>{comment.content}</p>
-                    </div>
+                    <p className="text-gray-300 text-sm">{comment.content}</p>
                   </div>
-                ))
-              ) : (
-                <div className="no-comments">
-                  <MessageSquare size={48} />
-                  <p>Seja o primeiro a comentar sobre este jogo!</p>
                 </div>
+              )) : (
+                <p className="text-gray-500 text-center py-4">Nenhum comentário ainda. Seja o primeiro!</p>
               )}
             </div>
           </section>
         </div>
 
         {/* Sidebar */}
-        <aside className="game-sidebar">
-          <div className="sidebar-card">
-            <h3 className="sidebar-title">Detalhes Técnicos</h3>
-            <div className="technical-details">
-              <div className="detail-item">
-                <span className="detail-label">ID do Jogo:</span>
-                <span className="detail-value">{game.id}</span>
-              </div>
-              <div className="detail-item">
-                <span className="detail-label">Slug:</span>
-                <span className="detail-value">{game.slug}</span>
-              </div>
+        <aside className="space-y-6">
+          <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+            <h3 className="text-lg font-bold mb-4 text-white">Informações</h3>
+            <div className="space-y-4">
+              <InfoRow icon={Calendar} label="Lançamento" value={new Date(game.releaseDate).toLocaleDateString()} />
+              <InfoRow icon={Clock} label="Tempo de Jogo" value={game.playtime} />
+              <InfoRow icon={Users} label="Modo" value={game.players} />
+              <InfoRow icon={Gamepad2} label="Desenvolvedor" value={game.developer} />
+              <InfoRow icon={Globe} label="Distribuidora" value={game.publisher} />
             </div>
           </div>
 
-          <div className="sidebar-card">
-            <h3 className="sidebar-title">Requisitos do Sistema</h3>
-            <div className="requirements-preview">
-              <div className="req-preview-item">
-                <span>Sistema Operacional:</span>
-                <span>{gameDetails.systemRequirements.minimum.os}</span>
+          <div className="bg-gray-800/50 p-6 rounded-xl border border-gray-700">
+            <h3 className="text-lg font-bold mb-4 text-white">Requisitos Mínimos</h3>
+            <div className="text-sm space-y-3 text-gray-300">
+              <div className="flex justify-between border-b border-gray-700 pb-2">
+                <span className="text-gray-500">OS</span>
+                <span>{game.systemRequirements?.minimum?.os}</span>
               </div>
-              <div className="req-preview-item">
-                <span>Processador:</span>
-                <span>{gameDetails.systemRequirements.minimum.processor}</span>
+              <div className="flex justify-between border-b border-gray-700 pb-2">
+                <span className="text-gray-500">CPU</span>
+                <span>{game.systemRequirements?.minimum?.processor}</span>
               </div>
-              <div className="req-preview-item">
-                <span>Memória:</span>
-                <span>{gameDetails.systemRequirements.minimum.memory}</span>
+              <div className="flex justify-between border-b border-gray-700 pb-2">
+                <span className="text-gray-500">RAM</span>
+                <span>{game.systemRequirements?.minimum?.memory}</span>
               </div>
-              <button 
-                className="view-requirements-btn"
-                onClick={() => alert('Requisitos completos em desenvolvimento!')}
-              >
-                Ver requisitos completos
-              </button>
+              <div className="flex justify-between border-b border-gray-700 pb-2">
+                <span className="text-gray-500">GPU</span>
+                <span>{game.systemRequirements?.minimum?.graphics}</span>
+              </div>
             </div>
           </div>
         </aside>
+
       </div>
     </div>
   );
 };
+
+// Componente auxiliar para linhas da sidebar
+const InfoRow = ({ icon: Icon, label, value }) => (
+  <div className="flex items-center justify-between group">
+    <div className="flex items-center gap-3 text-gray-400 group-hover:text-blue-400 transition">
+      <Icon size={18} />
+      <span className="text-sm">{label}</span>
+    </div>
+    <span className="text-sm font-medium text-gray-200">{value}</span>
+  </div>
+);
 
 export default GamePage;
