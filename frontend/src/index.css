@@ -29,12 +29,14 @@ body {
   padding: 2rem;
 }
 
+.container h1 {
+  text-align: center;
+}
+
 /* Card do Jogo */
 .game-card {
   background: #2a2a2a;
-  border-radius: 8px;
   padding: 1rem;
-  border: 1px solid #333;
   box-sizing: border-box;
 }
 
@@ -298,7 +300,6 @@ img {
 
 .GamesPage {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Sempre 2 colunas */
-  gap: 20px; /* Espaço entre os cards */
-  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
 }
