@@ -2,14 +2,13 @@
 
 /* Hero Section */
 .home-hero {
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url("https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/BadCatNewBanner.png");
+  background: linear-gradient(#0000001f, #000000c7), url("https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/BadCatNewBanner.png");
   background-size: cover;
   background-position: center;
   padding: 100px 20px;
   text-align: center;
   border-bottom: 1px solid #333;
 }
-
 .home-hero-title {
   font-size: 3.5rem;
   margin-bottom: 20px;

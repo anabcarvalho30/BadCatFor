@@ -10,9 +10,9 @@ const Home = () => {
             Bem-vindo ao <span>BadCat Games</span>
           </h1>
           <p className="home-hero-subtitle">
-            O fórum oficial dos desenvolvedores de Demon's trudge,
-            Tiny Whispers, Morris' Nights of Wonders e The Campus!
-          </p>
+            O fórum oficial dos desenvolvedores de Demon's trudge, </p>
+          <p  className="home-hero-subtitle">
+            Tiny Whispers, Morris' Nights of Wonders e The Campus! </p>
           <Link to="/games" className="auth-btn home-hero-button">
             <Gamepad2 size={24} />
             Explorar Jogos
