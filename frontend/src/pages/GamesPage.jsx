@@ -21,7 +21,7 @@ const GamesPage = () => {
               <img
                 src={game.cover || 'https://via.placeholder.com/250'}
                 alt={game.name}
-                className="game-card-image"
+                style={{ width: '100%', height: '25rem', objectFit: 'cover' }}
               />
               <h3>{game.name}</h3>
             </div>
