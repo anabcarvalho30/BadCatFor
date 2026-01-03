@@ -4,6 +4,7 @@
 @import url(style/userpage.css);
 @import url(style/home.css);
 @import url(style/games.css);
+@import url(style/gamepage.css);
 
 :root {
   font-family: "Jost", sans-serif;  background-color: #1a1a1a;
