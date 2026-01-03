@@ -19,11 +19,38 @@ const UserPage = () => {
 
   const isMyProfile = currentUser && currentUser.id === Number(id);
 
+  // Função para validar URLs
+  const isValidUrl = (url) => {
+    if (!url) return false;
+    try {
+      new URL(url);
+      return url.startsWith('http');
+    } catch (_) {
+      return false;
+    }
+  };
+
+  // Função para obter URL segura da foto
+  const getSafePhotoUrl = (url) => {
+    const defaultPhoto = "https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/nopicuser.jpg";
+    if (!url || url.trim() === '') return defaultPhoto;
+    if (isValidUrl(url)) return url;
+    return defaultPhoto;
+  };
+
+  // Função para obter URL segura do banner
+  const getSafeBannerUrl = (url) => {
+    if (!url || url.trim() === '' || !isValidUrl(url)) {
+      return "https://placehold.co/1200x300/222/555?text=Banner";
+    }
+    return url;
+  };
+
   useEffect(() => {
     if (isMyProfile) {
       setProfileUser(currentUser);
       setEditForm({
-        name: currentUser.name,
+        name: currentUser.name || '',
         photo: currentUser.photo || '',
         banner: currentUser.banner || ''
       });
@@ -32,15 +59,26 @@ const UserPage = () => {
 
   const handleSave = async () => {
     alert("Funcionalidade de salvar será conectada ao backend em breve!");
-    setProfileUser({...profileUser, ...editForm});
+    setProfileUser({
+      ...profileUser, 
+      ...editForm,
+      photo: getSafePhotoUrl(editForm.photo),
+      banner: getSafeBannerUrl(editForm.banner)
+    });
     setIsEditing(false);
   };
 
   if (!profileUser) return <div className="container" style={{padding: '20px', color: '#fff'}}>Carregando perfil...</div>;
 
   const bannerImage = isEditing 
-    ? (editForm.banner || "https://placehold.co/1200x300/333/666?text=Sem+Banner") 
-    : (profileUser.banner || "https://placehold.co/1200x300/222/555?text=Banner");
+    ? getSafeBannerUrl(editForm.banner)
+    : getSafeBannerUrl(profileUser.banner);
+
+  const avatarImage = isEditing 
+    ? getSafePhotoUrl(editForm.photo)
+    : getSafePhotoUrl(profileUser.photo);
+
+  const postAvatarImage = getSafePhotoUrl(profileUser.photo);
 
   return (
     <div>
@@ -64,6 +102,11 @@ const UserPage = () => {
               placeholder="https://exemplo.com/banner.jpg"
               className="auth-input banner-input"
             />
+            {editForm.banner && !isValidUrl(editForm.banner) && (
+              <small style={{color: '#ff6b6b', fontSize: '0.75rem'}}>
+                URL inválida. Use: https://exemplo.com/imagem.jpg
+              </small>
+            )}
           </div>
         )}
       </div>
@@ -75,9 +118,12 @@ const UserPage = () => {
           {/* FOTO DE PERFIL */}
           <div className="profile-avatar-container">
             <img 
-              src={isEditing ? (editForm.photo || "https://placehold.co/150?text=Foto") : (profileUser.photo || "https://placehold.co/150?text=U")} 
+              src={avatarImage} 
               alt="Avatar" 
               className="profile-avatar"
+              onError={(e) => {
+                e.target.src = "https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/nopicuser.jpg";
+              }}
             />
             {isEditing && (
               <div className="avatar-edit-overlay">
@@ -95,14 +141,15 @@ const UserPage = () => {
                   value={editForm.name}
                   onChange={(e) => setEditForm({...editForm, name: e.target.value})}
                   className="auth-input profile-name-input"
+                  placeholder="Nome do usuário"
                 />
               ) : (
                 <h1 className="profile-name">
-                  {profileUser.name}
+                  {profileUser.name || 'Usuário sem nome'}
                 </h1>
               )}
               <span className="profile-username">
-                @{profileUser.email?.split('@')[0]}
+                @{profileUser.email?.split('@')[0] || 'usuario'}
               </span>
             </div>
 
@@ -143,8 +190,13 @@ const UserPage = () => {
                 className="auth-input" 
                 value={editForm.photo} 
                 onChange={(e) => setEditForm({...editForm, photo: e.target.value})}
-                placeholder="https://..."
+                placeholder="https://exemplo.com/foto.jpg"
               />
+              {editForm.photo && !isValidUrl(editForm.photo) && (
+                <small style={{color: '#ff6b6b', fontSize: '0.75rem', display: 'block', marginTop: '5px'}}>
+                  URL inválida. Use: https://exemplo.com/foto.jpg
+                </small>
+              )}
               <label>Alterar Senha (opcional):</label>
               <input type="password" className="auth-input" placeholder="Nova senha" />
             </div>
@@ -157,12 +209,15 @@ const UserPage = () => {
           <div className="post-input-container">
             <div className="post-input-header">
                <img 
-                  src={profileUser.photo || "https://placehold.co/50"} 
+                  src={postAvatarImage} 
                   alt="" 
                   className="post-input-avatar"
+                  onError={(e) => {
+                    e.target.src = "https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/nopicuser.jpg";
+                  }}
                />
                <textarea 
-                  placeholder={`No que você está pensando, ${profileUser.name}?`}
+                  placeholder={`No que você está pensando, ${profileUser.name || 'Usuário'}?`}
                   className="post-textarea"
                   rows={2}
                ></textarea>
