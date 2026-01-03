@@ -305,4 +305,16 @@ img {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px); /* Opcional: vem de baixo */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
