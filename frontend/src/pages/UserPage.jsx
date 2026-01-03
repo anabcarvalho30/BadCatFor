@@ -26,21 +26,19 @@ const UserPage = () => {
       setEditForm({
         name: currentUser.name,
         photo: currentUser.photo || '',
-        banner: currentUser.banner || '' // Carrega o banner do usuário
+        banner: currentUser.banner || ''
       });
     }
   }, [id, currentUser, isMyProfile]);
 
   const handleSave = async () => {
     alert("Funcionalidade de salvar será conectada ao backend em breve!");
-    // Aqui você enviaria editForm.banner para o backend
     setProfileUser({...profileUser, ...editForm});
     setIsEditing(false);
   };
 
   if (!profileUser) return <div className="container" style={{padding: '20px', color: '#fff'}}>Carregando perfil...</div>;
 
-  // Define qual imagem mostrar no banner (Formulário, Usuário ou Placeholder)
   const bannerImage = isEditing 
     ? (editForm.banner || "https://placehold.co/1200x300/333/666?text=Sem+Banner") 
     : (profileUser.banner || "https://placehold.co/1200x300/222/555?text=Banner");
@@ -48,15 +46,7 @@ const UserPage = () => {
   return (
     <div>
       {/* --- ÁREA DO BANNER --- */}
-      <div style={{ 
-        height: '250px', // Aumentei um pouco para ficar mais bonito com imagem
-        width: '100%',
-        backgroundColor: '#222',
-        backgroundImage: `url(${bannerImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        position: 'relative'
-      }}>
+      <div className='banner-user'>
         {/* Overlay escuro para melhorar leitura se tiver texto sobre a imagem, opcional */}
         <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))'}}></div>
 
