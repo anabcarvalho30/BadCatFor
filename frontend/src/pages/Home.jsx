@@ -28,9 +28,9 @@ const Home = () => {
             </Link>
             <Link to="/signup" style={{ 
               padding: '15px 30px', 
-              border: '1px solid #646cff', 
+              border: '1px solid #8200b6ff', 
               borderRadius: '4px', 
-              color: '#646cff', 
+              color: '#8200b6ff', 
               textDecoration: 'none', 
               fontWeight: 'bold',
               display: 'flex', 
@@ -76,13 +76,13 @@ const Home = () => {
         <div className="container">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
             <h2>Últimas Notícias</h2>
-            <Link to="/about/news" style={{ color: '#646cff', display: 'flex', alignItems: 'center', gap: '5px' }}>
+            <Link to="/about/news" style={{ color: '#8200b6ff', display: 'flex', alignItems: 'center', gap: '5px' }}>
               Ver tudo <ArrowRight size={16} />
             </Link> {/*Path não existe!!!*/}
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ padding: '20px', background: '#1a1a1a', borderLeft: '4px solid #646cff', borderRadius: '4px' }}>
+            <div style={{ padding: '20px', background: '#1a1a1a', borderLeft: '4px solid #8200b6ff', borderRadius: '4px' }}>
               <small style={{ color: '#888' }}>01 Jan, 2026</small>
               <h3 style={{ margin: '5px 0' }}>Silent Hill 2 Remake: O pesadelo retorna</h3>
               <p style={{ margin: 0, color: '#ccc' }}>Confira nossa análise completa sobre o retorno triunfante da Konami...</p>
