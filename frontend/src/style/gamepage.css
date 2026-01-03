@@ -765,3 +765,103 @@
 .loading-container h2 {
   margin-bottom: 20px;
 }
+
+/* Game Page CSS Adicional */
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: var(--cor-principal, #8200b6ff);
+  animation: spin 1s linear infinite;
+  margin: 20px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.detail-link {
+  color: var(--cor-principal, #8200b6ff);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+}
+
+.detail-link:hover {
+  text-decoration: underline;
+}
+
+.game-status {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ccc;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2ecc71;
+}
+
+.status-item.available .status-dot {
+  background: #2ecc71;
+}
+
+.quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quick-action-btn {
+  padding: 10px 15px;
+  background: #333;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.quick-action-btn:hover {
+  background: #444;
+}
+
+.game-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.game-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(130, 0, 182, 0.1);
+  color: var(--cor-principal, #8200b6ff);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(130, 0, 182, 0.3);
+}
+
+.game-tag svg {
+  flex-shrink: 0;
+}
