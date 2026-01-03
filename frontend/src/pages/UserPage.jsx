@@ -166,7 +166,7 @@ const UserPage = () => {
                   </>
                 ) : (
                   <button 
-                    onClick={() => setIsEditing(true)} 
+                    onClick={() => setIsEditing(false)} 
                     className="edit-btn"
                     title="Editar Perfil"
                   >
