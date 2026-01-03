@@ -96,7 +96,7 @@ img {
 }
 
 .auth-btn:hover {
-  background-color: #535bf2;
+  background-color: var(--cor-principal);
 }
 
 .auth-link {

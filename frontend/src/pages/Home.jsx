@@ -20,26 +20,10 @@ const Home = () => {
             A comunidade definitiva para amantes do terror. Descubra novos pesadelos, 
             discuta teorias e compartilhe suas experiências nos jogos mais assustadores.
           </p>
-          
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/games" className="auth-btn" style={{ textDecoration: 'none', fontSize: '1.1rem', padding: '15px 30px', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Gamepad2 size={24} />
               Explorar Jogos
             </Link>
-            <Link to="/signup" style={{ 
-              padding: '15px 30px', 
-              border: '1px solid #8200b6ff', 
-              borderRadius: '4px', 
-              color: '#8200b6ff', 
-              textDecoration: 'none', 
-              fontWeight: 'bold',
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '10px' 
-            }}>
-              Criar Conta Grátis
-            </Link>
-          </div>
         </div>
       </section>
 
