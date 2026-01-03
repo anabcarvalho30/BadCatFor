@@ -74,7 +74,7 @@
 }
 
 .feature-icon {
-  color: var(--cor-principal, #8200b6ff);
+  color: rgb(255, 255, 255);
 }
 
 /* News Section */
