@@ -2,7 +2,7 @@
 
 /* Hero Section */
 .home-hero {
-  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url("https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/BadCatBanner.png");
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url("https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/BadCatNewBanner.png");
   background-size: cover;
   background-position: center;
   padding: 100px 20px;
