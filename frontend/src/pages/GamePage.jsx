@@ -1,89 +1,100 @@
-import { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
   Star, 
-  Download, 
-  Gamepad2, 
-  Calendar, 
-  Clock, 
-  Users, 
-  Globe, 
   Heart, 
   Share2, 
   MessageSquare,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Clock,
+  Users,
+  Globe,
+  Gamepad2,
+  Calendar
 } from 'lucide-react';
-
-// Dados de exemplo - você substituirá por dados da API
-const mockGameData = {
-  id: 1,
-  name: 'Silent Hill 2 Remake',
-  slug: 'silent-hill-2-remake',
-  cover: 'https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/game-covers/silent-hill-2.jpg',
-  description: 'O remake aclamado do clássico de terror psicológico. Retorne à cidade de Silent Hill em uma experiência reconstruída do zero com gráficos de última geração e jogabilidade modernizada.',
-  releaseDate: '2024-10-08',
-  playtime: '15-20 horas',
-  players: 'Single Player',
-  genre: 'Terror Psicológico',
-  developer: 'Bloober Team',
-  publisher: 'Konami',
-  platforms: ['PS5', 'PC', 'Xbox Series X/S'],
-  rating: 4.8,
-  reviewCount: 1247,
-  price: 249.90,
-  onSale: true,
-  salePrice: 199.90,
-  screenshots: [
-    'https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/game-screens/silent-hill-1.jpg',
-    'https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/game-screens/silent-hill-2.jpg',
-    'https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/game-screens/silent-hill-3.jpg',
-    'https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/game-screens/silent-hill-4.jpg'
-  ],
-  features: [
-    'Gr�ficos em 4K com ray tracing',
-    'Sistema de combate redesenhado',
-    'Trilha sonora remasterizada',
-    'Novas �reas explor�veis',
-    'Modo foto integrado'
-  ],
-  systemRequirements: {
-    minimum: {
-      os: 'Windows 10 64-bit',
-      processor: 'Intel Core i5-7500 / AMD Ryzen 3 1200',
-      memory: '8 GB RAM',
-      graphics: 'NVIDIA GTX 1060 6GB / AMD RX 580 8GB',
-      storage: '50 GB'
-    },
-    recommended: {
-      os: 'Windows 11 64-bit',
-      processor: 'Intel Core i7-9700K / AMD Ryzen 5 3600',
-      memory: '16 GB RAM',
-      graphics: 'NVIDIA RTX 2070 / AMD RX 6700 XT',
-      storage: '50 GB SSD'
-    }
-  }
-};
 
 const GamePage = () => {
   const { slug } = useParams();
-  const [selectedImage, setSelectedImage] = useState(0);
+  const navigate = useNavigate();
+  const [game, setGame] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [showSystemRequirements, setShowSystemRequirements] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
 
-  // Aqui você fará a requisição para a API usando o slug
-  // const { data: game, loading, error } = useFetchGame(slug);
-  
-  const game = mockGameData; // Temporário
+  // Buscar dados do jogo
+  useEffect(() => {
+    const fetchGameData = async () => {
+      try {
+        setLoading(true);
+        
+        // Buscar jogo pelo slug
+        const gameResponse = await fetch(`http://localhost:3000/api/games/${slug}`);
+        if (!gameResponse.ok) {
+          throw new Error('Jogo não encontrado');
+        }
+        const gameData = await gameResponse.json();
+        
+        // Buscar comentários do jogo
+        const commentsResponse = await fetch(`http://localhost:3000/api/games/${slug}/comments`);
+        const commentsData = await commentsResponse.ok ? await commentsResponse.json() : [];
+        
+        setGame(gameData);
+        setComments(commentsData);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  if (!game) {
+    if (slug) {
+      fetchGameData();
+    }
+  }, [slug]);
+
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/games/${slug}/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: newComment }),
+      });
+
+      if (response.ok) {
+        const addedComment = await response.json();
+        setComments([...comments, addedComment]);
+        setNewComment('');
+      }
+    } catch (err) {
+      console.error('Erro ao adicionar comentário:', err);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="container">
+        <div className="loading-container">
+          <h2>Carregando jogo...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !game) {
     return (
       <div className="container">
         <div className="game-not-found">
-          <h1>Jogo n�o encontrado</h1>
-          <p>O jogo que voc� est� procurando n�o existe ou foi removido.</p>
+          <h1>Jogo não encontrado</h1>
+          <p>O jogo que você está procurando não existe ou foi removido.</p>
           <Link to="/games" className="auth-btn">
             <ArrowLeft size={20} />
             Voltar para Jogos
@@ -93,12 +104,55 @@ const GamePage = () => {
     );
   }
 
+  // Dados padrão (você pode adicionar estes campos ao seu model depois)
+  const gameDetails = {
+    rating: 4.5,
+    reviewCount: 1247,
+    price: 249.90,
+    onSale: false,
+    releaseDate: '2024-10-08',
+    playtime: '15-20 horas',
+    players: 'Single Player',
+    genre: 'Terror Psicológico',
+    developer: 'Desenvolvedor Desconhecido',
+    publisher: 'Distribuidora Desconhecida',
+    platforms: ['PC', 'Console'],
+    screenshots: [
+      'https://via.placeholder.com/800x450/333/666?text=Screenshot+1',
+      'https://via.placeholder.com/800x450/333/666?text=Screenshot+2',
+      'https://via.placeholder.com/800x450/333/666?text=Screenshot+3',
+    ],
+    features: [
+      'Jogabilidade envolvente',
+      'Gráficos de alta qualidade',
+      'História cativante',
+    ],
+    systemRequirements: {
+      minimum: {
+        os: 'Windows 10',
+        processor: 'Intel Core i5',
+        memory: '8 GB RAM',
+        graphics: 'NVIDIA GTX 1060',
+        storage: '50 GB'
+      },
+      recommended: {
+        os: 'Windows 11',
+        processor: 'Intel Core i7',
+        memory: '16 GB RAM',
+        graphics: 'NVIDIA RTX 2060',
+        storage: '50 GB SSD'
+      }
+    }
+  };
+
   return (
     <div className="game-page">
       {/* Hero Section com Cover */}
       <div 
         className="game-hero"
-        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(${game.cover})` }}
+        style={{ 
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), url(${game.cover || 'https://via.placeholder.com/1920x600/222/555?text=Capa+do+Jogo'})` 
+        }}
       >
         <div className="container">
           <Link to="/games" className="back-button">
@@ -116,18 +170,20 @@ const GamePage = () => {
                     <Star 
                       key={i} 
                       size={20} 
-                      fill={i < Math.floor(game.rating) ? "#FFD700" : "none"} 
+                      fill={i < Math.floor(gameDetails.rating) ? "#FFD700" : "none"} 
                       color="#FFD700" 
                     />
                   ))}
-                  <span className="rating-text">{game.rating}/5 ({game.reviewCount} reviews)</span>
+                  <span className="rating-text">
+                    {gameDetails.rating}/5 ({gameDetails.reviewCount} reviews)
+                  </span>
                 </div>
               </div>
 
               <div className="game-tags">
-                <span className="game-tag">{game.genre}</span>
-                <span className="game-tag">{game.players}</span>
-                {game.platforms.map((platform, index) => (
+                <span className="game-tag">{gameDetails.genre}</span>
+                <span className="game-tag">{gameDetails.players}</span>
+                {gameDetails.platforms.map((platform, index) => (
                   <span key={index} className="game-tag platform-tag">{platform}</span>
                 ))}
               </div>
@@ -135,20 +191,19 @@ const GamePage = () => {
 
             <div className="game-actions">
               <div className="price-section">
-                {game.onSale ? (
+                {gameDetails.onSale ? (
                   <>
-                    <span className="original-price">R$ {game.price.toFixed(2)}</span>
-                    <span className="sale-price">R$ {game.salePrice.toFixed(2)}</span>
-                    <span className="discount-badge">-{Math.round((1 - game.salePrice/game.price) * 100)}%</span>
+                    <span className="original-price">R$ {gameDetails.price.toFixed(2)}</span>
+                    <span className="sale-price">R$ {(gameDetails.price * 0.8).toFixed(2)}</span>
+                    <span className="discount-badge">-20%</span>
                   </>
                 ) : (
-                  <span className="current-price">R$ {game.price.toFixed(2)}</span>
+                  <span className="current-price">R$ {gameDetails.price.toFixed(2)}</span>
                 )}
               </div>
 
               <div className="action-buttons">
-                <button className="action-btn primary-btn">
-                  <Download size={20} />
+                <button className="action-btn primary-btn" onClick={() => alert('Funcionalidade de compra em desenvolvimento!')}>
                   Comprar Agora
                 </button>
                 <button 
@@ -156,9 +211,9 @@ const GamePage = () => {
                   onClick={() => setIsLiked(!isLiked)}
                 >
                   <Heart size={20} fill={isLiked ? "#ff4757" : "none"} />
-                  {isLiked ? 'Remover' : 'Favoritar'}
+                  {isLiked ? 'Remover dos Favoritos' : 'Adicionar aos Favoritos'}
                 </button>
-                <button className="action-btn share-btn">
+                <button className="action-btn share-btn" onClick={() => navigator.clipboard.writeText(window.location.href)}>
                   <Share2 size={20} />
                   Compartilhar
                 </button>
@@ -179,7 +234,7 @@ const GamePage = () => {
               <div className="game-features">
                 <h3>Características Principais</h3>
                 <ul>
-                  {game.features.map((feature, index) => (
+                  {gameDetails.features.map((feature, index) => (
                     <li key={index} className="feature-item">
                       <Star size={16} />
                       <span>{feature}</span>
@@ -208,25 +263,24 @@ const GamePage = () => {
           </section>
 
           {/* Screenshots Gallery */}
-          <section className="game-section">
-            <h2 className="section-title">Capturas de Tela</h2>
-            <div className="screenshots-grid">
-              {game.screenshots.map((screenshot, index) => (
-                <div 
-                  key={index}
-                  className={`screenshot-thumb ${selectedImage === index ? 'active' : ''}`}
-                  onClick={() => setSelectedImage(index)}
-                >
-                  <img src={screenshot} alt={`Screenshot ${index + 1}`} />
-                </div>
-              ))}
-            </div>
-            <div className="screenshot-main">
-              <img src={game.screenshots[selectedImage]} alt="Visualização principal" />
-            </div>
-          </section>
+          {gameDetails.screenshots.length > 0 && (
+            <section className="game-section">
+              <h2 className="section-title">Capturas de Tela</h2>
+              <div className="screenshots-grid">
+                {gameDetails.screenshots.map((screenshot, index) => (
+                  <div key={index} className="screenshot-thumb">
+                    <img 
+                      src={screenshot} 
+                      alt={`Screenshot ${index + 1} de ${game.name}`}
+                      onClick={() => window.open(screenshot, '_blank')}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
 
-          {/* Informações Técnicas */}
+          {/* Informações do Jogo */}
           <section className="game-section">
             <h2 className="section-title">Informações do Jogo</h2>
             <div className="game-info-grid">
@@ -234,161 +288,137 @@ const GamePage = () => {
                 <Calendar size={20} />
                 <div>
                   <span className="info-label">Data de Lançamento</span>
-                  <span className="info-value">{new Date(game.releaseDate).toLocaleDateString('pt-BR')}</span>
+                  <span className="info-value">
+                    {new Date(gameDetails.releaseDate).toLocaleDateString('pt-BR')}
+                  </span>
                 </div>
               </div>
               <div className="info-item">
                 <Clock size={20} />
                 <div>
                   <span className="info-label">Tempo de Jogo</span>
-                  <span className="info-value">{game.playtime}</span>
+                  <span className="info-value">{gameDetails.playtime}</span>
                 </div>
               </div>
               <div className="info-item">
                 <Users size={20} />
                 <div>
                   <span className="info-label">Modo de Jogo</span>
-                  <span className="info-value">{game.players}</span>
+                  <span className="info-value">{gameDetails.players}</span>
                 </div>
               </div>
               <div className="info-item">
                 <Gamepad2 size={20} />
                 <div>
                   <span className="info-label">Desenvolvedor</span>
-                  <span className="info-value">{game.developer}</span>
+                  <span className="info-value">{gameDetails.developer}</span>
                 </div>
               </div>
               <div className="info-item">
                 <Globe size={20} />
                 <div>
                   <span className="info-label">Distribuidora</span>
-                  <span className="info-value">{game.publisher}</span>
+                  <span className="info-value">{gameDetails.publisher}</span>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* Requisitos do Sistema */}
+          {/* Seção de Comentários */}
           <section className="game-section">
-            <div className="section-header">
-              <h2 className="section-title">Requisitos do Sistema</h2>
+            <h2 className="section-title">Comentários ({comments.length})</h2>
+            
+            {/* Formulário para novo comentário */}
+            <div className="comment-form">
+              <textarea
+                className="comment-input"
+                placeholder="Deixe seu comentário sobre este jogo..."
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                rows={3}
+              />
               <button 
-                className="toggle-btn"
-                onClick={() => setShowSystemRequirements(!showSystemRequirements)}
+                className="auth-btn comment-submit-btn"
+                onClick={handleAddComment}
+                disabled={!newComment.trim()}
               >
-                {showSystemRequirements ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                <MessageSquare size={18} />
+                Enviar Comentário
               </button>
             </div>
-            
-            {showSystemRequirements && (
-              <div className="system-requirements">
-                <div className="requirements-grid">
-                  <div className="requirements-card">
-                    <h3 className="requirements-title">Mínimos</h3>
-                    <div className="requirements-list">
-                      <div className="req-item">
-                        <span className="req-label">Sistema Operacional</span>
-                        <span className="req-value">{game.systemRequirements.minimum.os}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Processador</span>
-                        <span className="req-value">{game.systemRequirements.minimum.processor}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Memória</span>
-                        <span className="req-value">{game.systemRequirements.minimum.memory}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Placa de Vídeo</span>
-                        <span className="req-value">{game.systemRequirements.minimum.graphics}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Armazenamento</span>
-                        <span className="req-value">{game.systemRequirements.minimum.storage}</span>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div className="requirements-card recommended">
-                    <h3 className="requirements-title">Recomendados</h3>
-                    <div className="requirements-list">
-                      <div className="req-item">
-                        <span className="req-label">Sistema Operacional</span>
-                        <span className="req-value">{game.systemRequirements.recommended.os}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Processador</span>
-                        <span className="req-value">{game.systemRequirements.recommended.processor}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Memória</span>
-                        <span className="req-value">{game.systemRequirements.recommended.memory}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Placa de Vídeo</span>
-                        <span className="req-value">{game.systemRequirements.recommended.graphics}</span>
-                      </div>
-                      <div className="req-item">
-                        <span className="req-label">Armazenamento</span>
-                        <span className="req-value">{game.systemRequirements.recommended.storage}</span>
+            {/* Lista de Comentários */}
+            <div className="comments-list">
+              {comments.length > 0 ? (
+                comments.map((comment) => (
+                  <div key={comment.id} className="comment-item">
+                    <div className="comment-header">
+                      <div className="comment-author">
+                        <img 
+                          src={comment.user?.photo || 'https://via.placeholder.com/40/333/fff?text=U'} 
+                          alt={comment.user?.name || 'Usuário'}
+                          className="comment-avatar"
+                        />
+                        <div>
+                          <span className="comment-author-name">{comment.user?.name || 'Anônimo'}</span>
+                          <span className="comment-date">
+                            {new Date(comment.createdAt).toLocaleDateString('pt-BR')}
+                          </span>
+                        </div>
                       </div>
                     </div>
+                    <div className="comment-content">
+                      <p>{comment.content}</p>
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className="no-comments">
+                  <MessageSquare size={48} />
+                  <p>Seja o primeiro a comentar sobre este jogo!</p>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </section>
         </div>
 
         {/* Sidebar */}
         <aside className="game-sidebar">
           <div className="sidebar-card">
-            <h3 className="sidebar-title">Jogo Disponível Em</h3>
-            <div className="platforms-list">
-              {game.platforms.map((platform, index) => (
-                <div key={index} className="platform-item">
-                  <span className="platform-icon">🎮</span>
-                  <span>{platform}</span>
-                </div>
-              ))}
+            <h3 className="sidebar-title">Detalhes Técnicos</h3>
+            <div className="technical-details">
+              <div className="detail-item">
+                <span className="detail-label">ID do Jogo:</span>
+                <span className="detail-value">{game.id}</span>
+              </div>
+              <div className="detail-item">
+                <span className="detail-label">Slug:</span>
+                <span className="detail-value">{game.slug}</span>
+              </div>
             </div>
           </div>
 
           <div className="sidebar-card">
-            <h3 className="sidebar-title">Comunidade</h3>
-            <div className="community-stats">
-              <div className="stat-item">
-                <Heart size={20} />
-                <span>1.2K Favoritos</span>
+            <h3 className="sidebar-title">Requisitos do Sistema</h3>
+            <div className="requirements-preview">
+              <div className="req-preview-item">
+                <span>Sistema Operacional:</span>
+                <span>{gameDetails.systemRequirements.minimum.os}</span>
               </div>
-              <div className="stat-item">
-                <MessageSquare size={20} />
-                <span>847 Comentários</span>
+              <div className="req-preview-item">
+                <span>Processador:</span>
+                <span>{gameDetails.systemRequirements.minimum.processor}</span>
               </div>
-            </div>
-            <button className="community-btn">
-              <Users size={20} />
-              Entrar na Comunidade
-            </button>
-          </div>
-
-          <div className="sidebar-card">
-            <h3 className="sidebar-title">Jogos Similares</h3>
-            <div className="similar-games">
-              <div className="similar-game">
-                <img src="https://via.placeholder.com/60" alt="Similar Game" />
-                <div>
-                  <h4>Resident Evil 4 Remake</h4>
-                  <span className="similar-price">R$ 199,90</span>
-                </div>
+              <div className="req-preview-item">
+                <span>Memória:</span>
+                <span>{gameDetails.systemRequirements.minimum.memory}</span>
               </div>
-              <div className="similar-game">
-                <img src="https://via.placeholder.com/60" alt="Similar Game" />
-                <div>
-                  <h4>The Medium</h4>
-                  <span className="similar-price">R$ 149,90</span>
-                </div>
-              </div>
+              <button 
+                className="view-requirements-btn"
+                onClick={() => alert('Requisitos completos em desenvolvimento!')}
+              >
+                Ver requisitos completos
+              </button>
             </div>
           </div>
         </aside>
