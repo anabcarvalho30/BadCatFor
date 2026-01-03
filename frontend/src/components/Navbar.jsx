@@ -57,7 +57,7 @@ const Navbar = () => {
                   className="navbar-user-button"
                 >
                   <img 
-                    src={user.photo || "https://placehold.co/100x100?text=U"} 
+                    src={user.photo || "https://fjapncbcetbchzoostmw.supabase.co/storage/v1/object/public/images/nopicuser.jpg"} 
                     alt="Perfil" 
                     className="navbar-avatar"
                   />

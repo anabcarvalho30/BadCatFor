@@ -7,11 +7,11 @@ const Home = () => {
       <section className="home-hero">
         <div className="container">
           <h1 className="home-hero-title">
-            Bem-vindo ao <span>BadCatFor</span>
+            Bem-vindo ao <span>BadCat Games</span>
           </h1>
           <p className="home-hero-subtitle">
-            A comunidade definitiva para amantes do terror. Descubra novos pesadelos, 
-            discuta teorias e compartilhe suas experiências nos jogos mais assustadores.
+            O fórum oficial dos desenvolvedores de Demon's trudge,
+            Tiny Whispers, Morris' Nights of Wonders e The Campus!
           </p>
           <Link to="/games" className="auth-btn home-hero-button">
             <Gamepad2 size={24} />

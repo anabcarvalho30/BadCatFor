@@ -34,6 +34,12 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.home-hero-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 /* Features Section */
