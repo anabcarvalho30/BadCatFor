@@ -68,7 +68,7 @@ const UserPage = () => {
         )}
       </div>
 
-      <div className="container user-page-container">
+      <div className="user-page-container">
         
         <div className="profile-header">
           
