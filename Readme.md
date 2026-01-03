@@ -4,7 +4,7 @@
 
 ## Sobre a BadCat Games
 
-A **BadCat Games** é uma empresa indie de desenvolvimento de jogos digitais multiplataforma! Nosso objetivo é criar experiências divertidas, imersivas e acessíveis para toda a comudade gamer!
+A **BadCat Games** é uma empresa indie de desenvolvimento de jogos digitais multiplataforma! Nosso objetivo é criar experiências divertidas, imersivas e acessíveis para toda a comunidade gamer!
 
 A empresa nasceu como um projeto acadêmico, mas é pensada com uma estrutura profissional, simulando o funcionamento real de um estúdio de desenvolvimento de jogos.
 
@@ -65,10 +65,10 @@ Durante o ensino acadêmico, participou ativamente na área de design, atuando t
 ###  Arthur Lima 
 **Idade:** 18 anos  
 **Cargo:** Programador  
-**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+**GitHub:** https://github.com/Arthur-Lima07
 
 **Experiência prévia:**  
-Projeto de desenvolvimento de jogos utilizando GDScript na plataforma Godot. Desenvolvimento de projetos web com HTML, CSS, JavaScript e React. Experiência em projetos Java. Atualmente atua no desenvolvimento de jogos da Bad Cat Games utilizando a linguagem Luau.
+Projeto de desenvolvimento de jogos utilizando GDScript na plataforma Godot. Desenvolvimento de projetos web com HTML, CSS(Bootstrap e Tailwind), JavaScript, React e MongoDB. Experiência em projetos Java. Desenvolvimento de aplicações mobile usando Dart/Flutter. Atualmente atua no desenvolvimento de jogos da Bad Cat Games utilizando a linguagem Luau.
 
 ---
 
