@@ -312,11 +312,3 @@ img {
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
 }
-.banner-user {
-  height: 250px;
-  width: 100%;
-  background-color: #222;
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}

@@ -46,7 +46,15 @@ const UserPage = () => {
   return (
     <div>
       {/* --- ÁREA DO BANNER --- */}
-      <div className='banner-user'>
+      <div className='banner-user' style={{ 
+        height: '250px', // Aumentei um pouco para ficar mais bonito com imagem
+        width: '100%',
+        backgroundColor: '#222',
+        backgroundImage: `url(${bannerImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        position: 'relative'
+      }}>
         {/* Overlay escuro para melhorar leitura se tiver texto sobre a imagem, opcional */}
         <div style={{position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))'}}></div>
 
