@@ -55,7 +55,7 @@ Participação em projetos de desenvolvimento de jogos na área de programação
 ### Saul Ramos  
 **Idade:** 18 anos  
 **Cargo:** Designer | Programador  
-**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+**GitHub:** https://github.com/Saulrmsmag 
 
 **Experiência prévia:**  
 Durante o ensino acadêmico, participou ativamente na área de design, atuando tanto na criação de cenários quanto de personagens. Teve participação significativa na definição da maior parte das artes de uma experiência desenvolvida na plataforma ROBLOX.
@@ -75,7 +75,7 @@ Projeto de desenvolvimento de jogos utilizando GDScript na plataforma Godot. Des
 ### Isaac Ramos  
 **Idade:** 18 anos  
 **Cargo:** Modelador e Animador 3D | Programador  
-**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+**GitHub:** https://github.com/IsaacMaf 
 
 **Experiência prévia:**  
 Desenvolvimento em GDScript e criação de interfaces de jogos na plataforma Godot. Familiaridade com linguagens como Java, JavaScript, HTML, SQL e MongoDB. Experiência em modelagem e animação 3D no Blender, além de criação de objetos e personagens na plataforma ROBLOX Studio. Atuação em desenvolvimento web individual e em equipe, com uso frequente do VSCode.
@@ -85,7 +85,7 @@ Desenvolvimento em GDScript e criação de interfaces de jogos na plataforma God
 ### Ana Beatriz  
 **Idade:** 19 anos  
 **Cargo:** Designer e Programadora Web
-**GitHub:** https://github.com/SEU_USUARIO_AQUI  
+**GitHub:** https://github.com/anabcarvalho30 
 
 **Experiência prévia:**  
 Atividades como voluntária e bolsista acadêmica na Huawei Academy IFCE durante os anos de 2023 e 2024, atuando na área de design gráfico, UI/UX e monitoria de design. Desenvolvimento de projeto em Swift para iOS por meio do programa Capacita Brasil em 2025. Experiência com criação de interfaces gráficas e front-end utilizando Figma para Xcode (iOS) e VSCode (Android e Web).
